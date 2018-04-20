@@ -23,7 +23,6 @@
     <script type="text/javascript">
         var board = makeBoard(8);
         renderBoard(board);
-        const lozangos = document.getElementsByClassName('lozango');
         function canBeInLastStage(params) {
             var linha = 0;
                 //primeira e ultima linha tem elementos validos
@@ -46,8 +45,8 @@
             lozangos[index].onclick = function () {
                 var line = index / 8;
                 var column = index % 8;
-                markPosition(line, column);
-                lozangos[index].className = 'lozango selected';
+                board = markPosition(board,line, column);
+                renderBoard(board);
                 if(isInLastStage(lozangos)) {
                     alert('você é um ganhador!');
                 }

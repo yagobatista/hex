@@ -17,3 +17,7 @@ function renderBoard(board) {
         document.getElementsByClassName('board')[0].innerHTML += '</div>';
     }
 }
+function markPosition(board,line, column) {
+    const lozangos = document.getElementsByClassName('lozango');
+    lozangos[index].className = 'lozango selected';   
+}
