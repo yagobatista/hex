@@ -1,0 +1,18 @@
+div.lozango {
+    display: inline-block;
+    background-color: black;
+    border: black;
+    width: 50px;
+    height: 50px;
+    margin: 1px;
+}
+div.lozango.selected {
+    background-color: red;
+}
+div.linha {
+    display: block;
+    width: 100%;
+}
+.container {
+    text-align: center;
+}

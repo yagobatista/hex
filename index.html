@@ -1,0 +1,61 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hex</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div>
+
+            </div>
+            <div class="board">
+
+            </div>
+        </div>
+    </main>
+    <script src="js/helpers.js"></script>
+    <script type="text/javascript">
+        var board = makeBoard(8);
+        renderBoard(board);
+        const lozangos = document.getElementsByClassName('lozango');
+        function canBeInLastStage(params) {
+            var linha = 0;
+                //primeira e ultima linha tem elementos validos
+                for (let index = 0; index < lozangos.length; index++) {
+                    var line = index;
+                    var colunn = (index / 8);
+                    lozangos[]
+                }
+
+            } else if ((linha / 8) || (linha / 8)) {
+                //primeira e ultima colunas tem elementos validos
+
+            }
+        }
+        function isInLastStage(params) {
+            is
+        }
+        const lozangos = document.getElementsByClassName('lozango');
+        for (let index = 0; index < lozangos.length; index++) {
+            lozangos[index].onclick = function () {
+                var line = index / 8;
+                var column = index % 8;
+                markPosition(line, column);
+                lozangos[index].className = 'lozango selected';
+                if(isInLastStage(lozangos)) {
+                    alert('você é um ganhador!');
+                }
+            };
+
+        }
+    </script>
+
+</body>
+
+</html>
