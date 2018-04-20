@@ -22,34 +22,34 @@
     <script src="js/helpers.js"></script>
     <script type="text/javascript">
         var board = makeBoard(8);
-        renderBoard(board);
         function canBeInLastStage(params) {
-            var linha = 0;
-                //primeira e ultima linha tem elementos validos
-                for (let index = 0; index < lozangos.length; index++) {
-                    var line = index;
-                    var colunn = (index / 8);
-                    lozangos[]
-                }
+            // var linha = 0;
+            //     //primeira e ultima linha tem elementos validos
+            //     for (let index = 0; index < hexagonos.length; index++) {
+            //         var line = index;
+            //         var colunn = (index / 8);
+            //         hexagonos[]
+            //     }
 
-            } else if ((linha / 8) || (linha / 8)) {
-                //primeira e ultima colunas tem elementos validos
+            // } else if ((linha / 8) || (linha / 8)) {
+            //     //primeira e ultima colunas tem elementos validos
 
-            }
+            // }
         }
         function isInLastStage(params) {
-            is
+        
         }
-        const lozangos = document.getElementsByClassName('lozango');
-        for (let index = 0; index < lozangos.length; index++) {
-            lozangos[index].onclick = function () {
-                var line = index / 8;
-                var column = index % 8;
-                board = markPosition(board,line, column);
-                renderBoard(board);
-                if(isInLastStage(lozangos)) {
-                    alert('você é um ganhador!');
-                }
+        const hexagonos = document.getElementsByClassName('hexagono');
+        for (let index = 0; index < hexagonos.length; index++) {
+            hexagonos[index].onclick = function () {
+                // debugger;
+                // var line = index / 8;
+                // var column = index % 8;
+                // board = markPosition(board,line, column);
+                hexagonos[index].className = 'hexagono selected';   
+                // if(isInLastStage(hexagonos)) {
+                //     alert('você é um ganhador!');
+                // }
             };
 
         }

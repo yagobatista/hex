@@ -1,4 +1,4 @@
-div.lozango {
+div.hexagono {
     display: inline-block;
     background-color: black;
     border: black;
@@ -6,7 +6,7 @@ div.lozango {
     height: 50px;
     margin: 1px;
 }
-div.lozango.selected {
+div.hexagono.selected {
     background-color: red;
 }
 div.linha {
@@ -16,3 +16,33 @@ div.linha {
 .container {
     text-align: center;
 }
+/* .hexagono {
+    position: absolute;
+    width: 250px; 
+    height: 144.34px;
+    background-color: #64C7CC;
+    margin: 72.17px 0;
+    transition:all .3s ease;
+    LEFT:0
+  }
+  
+  .hexagono:before,
+  .hexagono:after {
+    content: "";
+    position: block;
+    width: 0;
+    border-left: 125px solid transparent;
+    border-right: 125px solid transparent;
+  }
+  
+  .hexagono:before {
+    bottom: 100%;
+    border-bottom: 72.17px solid #64C7CC;
+  }
+  
+  .hexagono:after {
+    top: 100%;
+    width: 0;
+    border-top: 72.17px solid #64C7CC;
+  }
+   */
