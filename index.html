@@ -15,13 +15,65 @@
 
             </div>
             <div class="board">
+                    <div class="hex-row">
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                    <div class="hex-row n1">
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                    <div class="hex-row n2">
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="hex">
+                            <div class="top"></div>
+                            <div class="middle"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                </div>
 
-            </div>
         </div>
     </main>
     <script src="js/helpers.js"></script>
     <script type="text/javascript">
-        var board = makeBoard(8);
+        makeBoard(8);
+        // var board = renderBoard(8);
         function canBeInLastStage(params) {
             // var linha = 0;
             //     //primeira e ultima linha tem elementos validos
@@ -37,16 +89,16 @@
             // }
         }
         function isInLastStage(params) {
-        
+
         }
-        const hexagonos = document.getElementsByClassName('hexagono');
+        const hexagonos = document.getElementsByClassName('hex');
         for (let index = 0; index < hexagonos.length; index++) {
             hexagonos[index].onclick = function () {
                 // debugger;
                 // var line = index / 8;
                 // var column = index % 8;
                 // board = markPosition(board,line, column);
-                hexagonos[index].className = 'hexagono selected';   
+                hexagonos[index].className = 'hex selected';
                 // if(isInLastStage(hexagonos)) {
                 //     alert('você é um ganhador!');
                 // }
