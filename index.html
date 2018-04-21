@@ -12,67 +12,26 @@
     <main>
         <div class="container">
             <div>
+                <label for="column">Escolha um tamanho de board:</label>
+                <input type="text" name="column" id="">
 
             </div>
             <div class="board">
-                    <div class="hex-row">
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                    </div>
-                    <div class="hex-row n1">
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                    </div>
-                    <div class="hex-row n2">
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                        <div class="hex">
-                            <div class="top"></div>
-                            <div class="middle"></div>
-                            <div class="bottom"></div>
-                        </div>
-                    </div>
-                </div>
+
+            </div>
 
         </div>
     </main>
     <script src="js/helpers.js"></script>
     <script type="text/javascript">
-        makeBoard(8);
+        document.getElementsByName('column')[0].onchange = function () {
+            if (Number.isInteger(parseInt(this.value))) {
+                makeBoard(this.value);
+                this.disabled = true;
+            } else {
+                alert('Digite um valor válido!');
+            }
+        };
         // var board = renderBoard(8);
         function canBeInLastStage(params) {
             // var linha = 0;
@@ -91,20 +50,7 @@
         function isInLastStage(params) {
 
         }
-        const hexagonos = document.getElementsByClassName('hex');
-        for (let index = 0; index < hexagonos.length; index++) {
-            hexagonos[index].onclick = function () {
-                // debugger;
-                // var line = index / 8;
-                // var column = index % 8;
-                // board = markPosition(board,line, column);
-                hexagonos[index].className = 'hex selected';
-                // if(isInLastStage(hexagonos)) {
-                //     alert('você é um ganhador!');
-                // }
-            };
 
-        }
     </script>
 
 </body>
