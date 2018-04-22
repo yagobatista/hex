@@ -1,41 +1,29 @@
-function makeBoard(column) {
+function makeBoard(board) {
     //render of t
-    var boardString = '';
-    for (let i = 0; i < column; i++) {
+    let boardString = '';
+    for (let i = 0; i < board.length; i++) {
          boardString += '<div class="hex-row n' + i + '">';
-        for (let j = 0; j < column; j++) {
+        for (let j = 0; j < board[i].length; j++) {
             boardString += ' <div class="hex"> <div class="top"></div> <div class="middle"></div> <div class="bottom"></div> </div>';
         }
         boardString += '</div>';
     }
     document.getElementsByClassName('board')[0].innerHTML = boardString;
-    //evento de click
-    const hexagonos = document.getElementsByClassName('hex');
+    //action of the event of click
+    let hexagonos = document.getElementsByClassName('hex');
     for (let index = 0; index < hexagonos.length; index++) {
         hexagonos[index].onclick = function () {
-            // debugger;
-            // var line = index / 8;
-            // var column = index % 8;
-            // board = markPosition(board,line, column);
-            hexagonos[index].className = 'hex selected';
-            // if(isInLastStage(hexagonos)) {
-            //     alert('você é um ganhador!');
-            // }
+            const column = index % board.length;
+            const line = (index - column) / board[0].length;
+            markPosition(board, line, column);   
         };
 
     }
 }
-function renderBoard(board) {
-    // function to render de array of array witch is de board in de screen
-    for (let i = 0; i < 8; i++) {
-        document.getElementsByClassName('board')[0].innerHTML += '<div class="linha">';
-        for (let j = 0; j < 8; j++) {
-            document.getElementsByClassName('board')[0].innerHTML += '<div class="hexagono"></div>';
-        }
-        document.getElementsByClassName('board')[0].innerHTML += '</div>';
-    }
-}
-function markPosition(board,line, column) {
-    const hexagonos = document.getElementsByClassName('hexagono');
-    hexagonos[index].className = 'hexagono selected';   
+function markPosition(board, line, column) {
+    if (board[line][column] === 0) {
+        const hexagonos = document.getElementsByClassName('hex');
+        board[line][column] = 1;
+        hexagonos[(line * board.length) + column].className = 'hex selected';           
+    };
 }

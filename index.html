@@ -22,34 +22,25 @@
 
         </div>
     </main>
+    <script src="js/script.js"></script>
     <script src="js/helpers.js"></script>
     <script type="text/javascript">
         document.getElementsByName('column')[0].onchange = function () {
-            if (Number.isInteger(parseInt(this.value))) {
-                makeBoard(this.value);
+            size = parseInt(this.value);
+            if (Number.isInteger(size)) {
+                let board = new Array();
+                for (let i = 0; i < size; i++) {
+                    board[i] = new Array();
+                    for (let j = 0; j < size; j++) {
+                        board[i][j] = 0;
+                    }                    
+                }
+                makeBoard(board);
                 this.disabled = true;
             } else {
                 alert('Digite um valor válido!');
             }
         };
-        // var board = renderBoard(8);
-        function canBeInLastStage(params) {
-            // var linha = 0;
-            //     //primeira e ultima linha tem elementos validos
-            //     for (let index = 0; index < hexagonos.length; index++) {
-            //         var line = index;
-            //         var colunn = (index / 8);
-            //         hexagonos[]
-            //     }
-
-            // } else if ((linha / 8) || (linha / 8)) {
-            //     //primeira e ultima colunas tem elementos validos
-
-            // }
-        }
-        function isInLastStage(params) {
-
-        }
 
     </script>
 
