@@ -15,15 +15,13 @@ function makeBoard(board) {
         hexagonos[index].onclick = function () {
             const column = index % board.length;
             const line = (index - column) / board[0].length;
-            markPosition(board, line, column);   
+            playerMove(board, line, column);
         };
 
     }
 }
 function markPosition(board, line, column) {
-    if (board[line][column] === 0) {
-        const hexagonos = document.getElementsByClassName('hex');
-        board[line][column] = 1;
-        hexagonos[(line * board.length) + column].className = 'hex selected';           
-    };
+    const hexagonos = document.getElementsByClassName('hex');
+    board[line][column] = 1;
+    hexagonos[(line * board.length) + column].className = 'hex selected';
 }
