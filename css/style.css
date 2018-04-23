@@ -1,71 +1,126 @@
 /* board */
+
 div.container {
     width: 100%;
 }
+
 .hex {
     float: left;
     margin-left: 2px;
     margin-bottom: -16px;
 }
+
 .hex .middle {
     width: 62px;
     height: 36px;
     background: #6C6;
 }
+
 .hex .top {
     border-bottom: 18px solid;
 }
+
 .hex .bottom {
-    border-top: 18px solid ;
+    border-top: 18px solid;
 }
+
 .hex .bottom,
 .hex .top {
     border-color: #6C6;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
 }
+
 .hex.selected .bottom,
-.hex.selected .top{
+.hex.selected .top {
     border-color: red;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
 }
+
 .hex.selected .middle {
     background: red;
 }
+
+.hex.ai-selected .bottom,
+.hex.ai-selected .top {
+    border-color: blue;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+}
+
+.hex.ai-selected .middle {
+    background: blue;
+}
+
 .hex-row {
     clear: left;
+    width: 100%;
 }
-.hex-row.n1{
+
+.hex-row.n1 {
     margin-left: 31px;
 }
-.hex-row.n2{
+
+.hex-row.n2 {
     margin-left: 62px;
 }
-.hex-row.n3{
+
+.hex-row.n3 {
     margin-left: 93px;
 }
-.hex-row.n4{
+
+.hex-row.n4 {
     margin-left: 124px;
 }
-.hex-row.n5{
+
+.hex-row.n5 {
     margin-left: 155px;
 }
-.hex-row.n6{
+
+.hex-row.n6 {
     margin-left: 186px;
 }
-.hex-row.n7{
+
+.hex-row.n7 {
     margin-left: 217px;
 }
-.hex-row.n8{
+
+.hex-row.n8 {
     margin-left: 248px;
 }
-.hex-row.n9{
+
+.hex-row.n9 {
     margin-left: 279px;
 }
-.hex-row.n10{
+
+.hex-row.n10 {
     margin-left: 310px;
 }
-.hex-row.n11{
+
+.hex-row.n11 {
     margin-left: 341px;
+}
+
+.hex-row.n12 {
+    margin-left: 372px;
+}
+
+.hex-row.n13 {
+    margin-left: 403px;
+}
+
+.hex-row.n14 {
+    margin-left: 434px;
+}
+
+.hex-row.n15 {
+    margin-left: 465px;
+}
+
+.hex-row.n16 {
+    margin-left: 496px;
+}
+.hex-row.n17 {
+    margin-left: 527px;
 }

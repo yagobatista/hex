@@ -3,9 +3,17 @@ function playerMove(board, line, column) {
         markPosition(board, line, column);
         setTimeout(() => {
             aiMove(board);
-        }, 1000);         
+        }, 500);
     }
 }
-function aiMove(board) {
 
+function aiMove(board) {
+    // random ai move
+    let line;
+    let column;
+    do {
+        line = parseInt(Math.random() * board.length);
+        column = parseInt(Math.random() * board.length);
+    } while (board[line][column] !== 0);
+    markPosition(board, line, column, 'ai');
 }

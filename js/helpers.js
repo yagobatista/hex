@@ -2,7 +2,7 @@ function makeBoard(board) {
     //render of t
     let boardString = '';
     for (let i = 0; i < board.length; i++) {
-         boardString += '<div class="hex-row n' + i + '">';
+        boardString += `<div class="hex-row n${i}">`;
         for (let j = 0; j < board[i].length; j++) {
             boardString += ' <div class="hex"> <div class="top"></div> <div class="middle"></div> <div class="bottom"></div> </div>';
         }
@@ -20,8 +20,11 @@ function makeBoard(board) {
 
     }
 }
-function markPosition(board, line, column) {
+
+function markPosition(board, line, column, player = null) {
+    player = player && `${player}-` || '';
+    const positionValue = player === 'ai' ? -1 : 1;
     const hexagonos = document.getElementsByClassName('hex');
-    board[line][column] = 1;
-    hexagonos[(line * board.length) + column].className = 'hex selected';
+    board[line][column] = positionValue;
+    hexagonos[(line * board.length) + column].className = `hex ${player}selected`;
 }
