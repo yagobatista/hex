@@ -1,9 +1,13 @@
 function playerMove(board, line, column) {
     if (board[line][column] === 0) {
         markPosition(board, line, column);
-        setTimeout(() => {
-            aiMove(board);
-        }, 500);
+        if (gameOver(board)) {
+            alert('Você ganhou!');
+        } else {
+            setTimeout(() => {
+                aiMove(board);
+            }, 500);
+        }
     }
 }
 
@@ -16,4 +20,11 @@ function aiMove(board) {
         column = parseInt(Math.random() * board.length);
     } while (board[line][column] !== 0);
     markPosition(board, line, column, 'ai');
+    if (gameOver(board, -1)) {
+        alert('A ia ganhou!')
+    }
+}
+
+function gameOver(board, player = 1) {
+    return true;
 }
