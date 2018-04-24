@@ -12,7 +12,7 @@ function makeBoard(board) {
     //action of the event of click
     let hexagonos = document.getElementsByClassName('hex');
     for (let index = 0; index < hexagonos.length; index++) {
-        hexagonos[index].onclick = function () {
+        hexagonos[index].onclick = () => {
             const column = index % board.length;
             const line = (index - column) / board[0].length;
             playerMove(board, line, column);
@@ -22,9 +22,9 @@ function makeBoard(board) {
 }
 
 function markPosition(board, line, column, player = null) {
-    player = player && `${player}-` || '';
+    player = player && `${ player }-` || '';
     const positionValue = player === 'ai' ? -1 : 1;
     const hexagonos = document.getElementsByClassName('hex');
     board[line][column] = positionValue;
-    hexagonos[(line * board.length) + column].className = `hex ${player}selected`;
+    hexagonos[(line * board.length) + column].className = `hex ${ player }selected`;
 }
