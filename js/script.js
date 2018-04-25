@@ -26,5 +26,5 @@ function aiMove(board) {
 }
 
 function gameOver(board, player = 1) {
-    return true;
+    return false;
 }
