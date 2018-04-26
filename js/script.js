@@ -37,52 +37,95 @@ function gameOver(board, player = 1) {
 	return retorno;
 }
 
+function eliminaRedundancia (linha, coluna, dimensao, corte, board){
+	//forma os candidatos
+	alert("linha")
+	alert(linha)
+	alert("coluna")
+	alert(coluna)
+	candidatos = new Array()
+	escolhidos = new Array()
+	if (linha > 0){
+		candidatos.push([linha-1, coluna])
+	}
+	alert("candidatos 1")
+	alert(candidatos)
+	if (linha > 0 && coluna < dimensao){
+		candidatos.push([linha-1, coluna+1])
+	}
+	alert("candidatos 1")
+	alert(candidatos)
+	if (coluna > 0){
+		candidatos.push([linha, coluna-1])
+	}
+	alert("candidatos 1")
+	alert(candidatos)
+	if (coluna < dimensao){
+		candidatos.push([linha, coluna+1])
+	}
+	alert("candidatos 1")
+	alert(candidatos)
+	if (linha < dimensao && coluna > 0){
+		candidatos.push([linha+1, coluna-1])
+	}
+	alert("candidatos 1")
+	alert(candidatos)
+	if (linha < dimensao){
+		candidatos.push([linha+1, coluna])
+	}
+	alert("candidatos 1")
+	alert(candidatos)
+	if (candidatos) {
+	//retira os nós já visitados
+		for(let i=0; i < candidatos.length; i++){
+			alert("i = ")
+			alert(i)
+			recusa = false
+			for(let j=0; j < corte.length; j++){
+			alert("j = ")
+			alert(j)
+			alert("candidatos i = ")
+			alert(candidatos[i])
+			alert("corte j = ")
+			alert(corte[j])
+
+				if (candidatos[i] == corte[j]){
+					recusa = true
+				}
+			alert("recusa = ")
+			alert(recusa)
+
+			if(!recusa){ 
+				escolhidos.push(candidatos[i])
+				corte.push(escolhidos)
+			}
+			alert("escolhidos = ")
+			alert(escolhidos)
+
+			}
+		}
+	}
+	alert("corte final")
+	alert(candidatos)
+	alert("escolhidos final")
+	alert(escolhidos)
+	return escolhidos
+}
+
 function buscaProfundidade(linha, coluna, board, player, corte){
-	if(linha < 5){ alert("recursiva") }
-	alert("linha - "+linha+" coluna - "+ coluna)
+	alert("o lugar pesquisado é linha - "+linha+" coluna - "+ coluna)
+	filhos = new Array()
 	if (coluna == 0) {
 		return true
 	} else {
-			pesquisa_alto = false			
-			pesquisa_alto_direita = false			
-			pesquisa_baixo = false			
-			pesquisa_baixo_esquerda = false			
-			pesquisa_direita = false			
-			pesquisa_esquerda = false			
-			alert("corte já incluído - "+corte)
-			for(i=0; i<corte.length; i++){
-				alert("pesquisa elemento "+i+" do vetor - "+corte[i])
-				let aux = [corte[i]]
-				alert("comparando "+aux[0]+" e "+[linha, coluna])
-				  if ((linha > 0) && !([linha-1, coluna] == aux[0])){
-					alert ("pode explorar no alto pois "[linha+1, coluna]+" != "+aux[0])
-					pesquisa_alto = true
+				filhos = eliminaRedundancia(linha, coluna, board.length-1, corte)
+				alert(filhos)
+				corte.push([linha, coluna])
+				for(let i=0; i < filhos.length-1; i++){
+					return buscaProfundidade(filhos[i][0], filhos[i][1], board, player, corte)
 				}
-				  if ((linha > 0) && !([linha-1, coluna+1] == aux[0])){
-					alert ("pode explorar no alto_direita pois "[linha+1, coluna]+" != "+aux[0])
-					pesquisa_alto_direita = true
-				}
-				  if ((linha < board.length) && !([linha+1, coluna] == aux[0])){
-					alert ("pode explorador abaixo pois "[linha+1, coluna]+" != "+aux[0])
-					pesquisa_alto = true
-				}
-				  if ((linha > 0) && !([linha-1, coluna+1] == aux[0])){
-					alert ("deu já explorado no alto pois "[linha+1, coluna]+" = "+aux[0])
-					pesquisa_alto_direita = true
-				}
- 			}
-			if (!segue) { corte.push([linha, coluna]) }
-			if ((board[linha][coluna] == player && board[linha][coluna-1]) || (board[linha][coluna] == player && board[linha+1][coluna-1]) == player){
-				alert("!!!!! recursiva coluna - "+coluna)
-				return buscaProfundidade(linha, coluna-1, board, player, corte)
-			} else if (linha > 0 && board[linha][coluna] == player && board[linha-1][coluna] == player) {
-				alert("!!!!! recursiva linha para baixo -"+linha)
-				return buscaProfundidade(linha-1, coluna, board, player, corte)
-			} else if (segue && linha < board.length-1 && board[linha][coluna] == player && board[linha+1][coluna] == player) {
-				alert("!!!!! recursiva linha pra cima -"+linha)
-				return buscaProfundidade(linha+1, coluna, board, player, corte)
-			} 
 	}
+	return false
 }
 
 function calculaPontos(board, player = 1){
