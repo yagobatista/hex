@@ -43,19 +43,36 @@ function buscaProfundidade(linha, coluna, board, player, corte){
 	if (coluna == 0) {
 		return true
 	} else {
-			segue = false			
+			pesquisa_alto = false			
+			pesquisa_alto_direita = false			
+			pesquisa_baixo = false			
+			pesquisa_baixo_esquerda = false			
+			pesquisa_direita = false			
+			pesquisa_esquerda = false			
 			alert("corte já incluído - "+corte)
 			for(i=0; i<corte.length; i++){
-				alert("i - "+i)
+				alert("pesquisa elemento "+i+" do vetor - ")
 				let aux = [corte[i]]
-				alert(""+aux[0]+" e "+[linha, coluna])
-				  if ([linha, coluna] == aux[0]){
-					alert ("deu igual pois linha/coluna - "+[linha, coluna]+" e corte - "+aux[0])
-					segue = true
+				alert("comparando "+aux[0]+" e "+[linha, coluna])
+				  if ((linha > 0) && !([linha-1, coluna] == aux[0])){
+					alert ("pode explorar no alto pois "[linha+1, coluna]+" != "+aux[0])
+					pesquisa_alto = true
+				}
+				  if ((linha > 0) && !([linha-1, coluna+1] == aux[0])){
+					alert ("pode explorar no alto_direita pois "[linha+1, coluna]+" != "+aux[0])
+					pesquisa_alto_direita = true
+				}
+				  if ((linha < board.length) && !([linha+1, coluna] == aux[0])){
+					alert ("pode explorador abaixo pois "[linha+1, coluna]+" != "+aux[0])
+					pesquisa_alto = true
+				}
+				  if ((linha > 0) && !([linha-1, coluna+1] == aux[0])){
+					alert ("deu já explorado no alto pois "[linha+1, coluna]+" = "+aux[0])
+					pesquisa_alto_direita = true
 				}
  			}
 			if (!segue) { corte.push([linha, coluna]) }
-			if (board[linha][coluna] == player && board[linha][coluna-1] == player){
+			if ((board[linha][coluna] == player && board[linha][coluna-1]) || (board[linha][coluna] == player && board[linha+1][coluna-1]) == player){
 				alert("!!!!! recursiva coluna - "+coluna)
 				return buscaProfundidade(linha, coluna-1, board, player, corte)
 			} else if (linha > 0 && board[linha][coluna] == player && board[linha-1][coluna] == player) {
