@@ -51,7 +51,7 @@ function buscaProfundidade(linha, coluna, board, player, corte){
 			pesquisa_esquerda = false			
 			alert("corte já incluído - "+corte)
 			for(i=0; i<corte.length; i++){
-				alert("pesquisa elemento "+i+" do vetor - ")
+				alert("pesquisa elemento "+i+" do vetor - "+corte[i])
 				let aux = [corte[i]]
 				alert("comparando "+aux[0]+" e "+[linha, coluna])
 				  if ((linha > 0) && !([linha-1, coluna] == aux[0])){
