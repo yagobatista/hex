@@ -23,7 +23,8 @@ function makeBoard(board) {
 
 function markPosition(board, line, column, player = null) {
     player = player && `${ player }-` || '';
-    const positionValue = player === 'ai' ? -1 : 1;
+	alert(player)
+    const positionValue = player === "ai-" ? -1 : 1;
     const hexagonos = document.getElementsByClassName('hex');
     board[line][column] = positionValue;
     hexagonos[(line * board.length) + column].className = `hex ${ player }selected`;
