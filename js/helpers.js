@@ -101,19 +101,25 @@ function buscaProfundidade(linha, coluna, board, player, corte){
 	if ((player > 0 && coluna == 0) || (player < 0 && linha == 0)) {
 		return true
 	} else {
-				corte.push([linha, coluna])
 				filhos = geraCandidatos(linha, coluna, board.length-1)
 				escolhidos = eliminaRedundancia(linha, coluna, filhos, corte)
 				caminho = checaFilho(escolhidos, player, board, corte)
+				corte.push([linha, coluna])
 				if(caminho){
-					for(let i=0; i < caminho.length-1; i++){
-						return buscaProfundidade(caminho[i], caminho[i+1], board, player, corte)
+					alert("entrou no caminho")
+					for(let i=0; i < caminho.length; i++){
+						alert("Caminho "+caminho[i]+caminho[i+1])
+						alert("Opcoes "+caminho.length)
+						retorno = buscaProfundidade(caminho[i], caminho[i+1], board, player, corte)
 					}
+
+					return retorno
 				} else { 
 					return false 
 				}
 	}
 }
+
 function calculaPontos(board, player = 1){
 	let pontos = 0
 	let size = board.length

@@ -1,7 +1,9 @@
 function playerMove(board, line, column) {
     if (board[line][column] === 0) {
         markPosition(board, line, column);
-        if (!gameOver(board)) {
+        if (gameOver(board)) {
+            alert('Você ganhou!');
+        } else {
             setTimeout(() => {
                 aiMove(board);
             }, 500);
