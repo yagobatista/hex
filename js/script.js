@@ -26,5 +26,16 @@ function aiMove(board) {
 }
 
 function gameOver(board, player = 1) {
-    return false;
+
+	aux = [board.length,board.length]
+	corte = new Array(aux)
+	retorno = false
+	for (let i = board.length-1; i >= 0; i--){
+		if (((player < 0 && board[board.length-1][i] == player) && (buscaProfundidade(board.length-1, i, board, player, corte)) ) || ((player > 0 && board[i][board.length-1] == player) && (buscaProfundidade(i,board.length-1, board, player, corte)))) {
+			retorno = true;
+		} 
+	}
+	return retorno;
 }
+
+
