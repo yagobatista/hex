@@ -63,7 +63,7 @@ function eliminaRedundancia (linha, coluna, filhos, corte){
 	//retira os nós já visitados
 		for(let i=0; i < filhos.length; i++){
 			let recusa = false
-			for(let j=0; j < corte.length-1; j++){
+			for(let j=0; j < corte.length; j++){
 				um = ""+filhos[i]
 				dois = ""+corte[j]
 				if (um == dois){
@@ -83,7 +83,7 @@ function checaFilho(escolhidos, player, board, corta){
 	caminho = new Array()
 	for(let i=0; i<escolhidos.length; i++) {
 		if(player == board[escolhidos[i][0]][escolhidos[i][1]]){
-			caminho = escolhidos[i]
+			caminho.push(escolhidos[i])
 		} else {
 			corta.push(escolhidos[i])
 		}
@@ -98,24 +98,33 @@ function checaFilho(escolhidos, player, board, corta){
 
 function buscaProfundidade(linha, coluna, board, player, corte){
 //vê se o jogador tem um caminho de ponta a ponta
+	var caminho = new Array()
 	if ((player > 0 && coluna == 0) || (player < 0 && linha == 0)) {
 		return true
 	} else {
+				alert("Pais - "+linha+coluna)
 				filhos = geraCandidatos(linha, coluna, board.length-1)
+				alert("filhos - "+filhos)
 				escolhidos = eliminaRedundancia(linha, coluna, filhos, corte)
+				alert("Já visitados - "+corte)
+				alert("não visitados - "+escolhidos)
 				caminho = checaFilho(escolhidos, player, board, corte)
+				alert("Da cor do pai - "+caminho)
 				corte.push([linha, coluna])
-				if(caminho){
-					alert("entrou no caminho")
-					for(let i=0; i < caminho.length; i++){
-						alert("Caminho "+caminho[i]+caminho[i+1])
-						alert("Opcoes "+caminho.length)
-						retorno = buscaProfundidade(caminho[i], caminho[i+1], board, player, corte)
+				if(caminho.length > 0){
+					alert("entrou no caminho com caminho.length"+caminho.length)
+					var k=0
+					alert("Caminho "+caminho[k][0]+caminho[k][1])
+					retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
+					alert("voltou, k = "+k+" com caminho.length"+caminho.length+"com retorno "+retorno)
+					if(!retorno && k == 0 && caminho.length > 1){ 
+						k = 1
+						retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
+					return retorno
 					}
-
 					return retorno
 				} else { 
-					return false 
+					return retorno
 				}
 	}
 }
