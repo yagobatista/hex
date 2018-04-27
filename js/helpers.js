@@ -24,7 +24,7 @@ function makeBoard(board) {
 
 function markPosition(board, line, column, player = null) {
     player = player && `${ player }-` || '';
-	alert(player)
+	//alert(player)
     const positionValue = player === "ai-" ? -1 : 1;
     const hexagonos = document.getElementsByClassName('hex');
     board[line][column] = positionValue;
@@ -102,21 +102,13 @@ function buscaProfundidade(linha, coluna, board, player, corte){
 	if ((player > 0 && coluna == 0) || (player < 0 && linha == 0)) {
 		return true
 	} else {
-				alert("Pais - "+linha+coluna)
 				filhos = geraCandidatos(linha, coluna, board.length-1)
-				alert("filhos - "+filhos)
 				escolhidos = eliminaRedundancia(linha, coluna, filhos, corte)
-				alert("Já visitados - "+corte)
-				alert("não visitados - "+escolhidos)
 				caminho = checaFilho(escolhidos, player, board, corte)
-				alert("Da cor do pai - "+caminho)
 				corte.push([linha, coluna])
 				if(caminho.length > 0){
-					alert("entrou no caminho com caminho.length"+caminho.length)
 					var k=0
-					alert("Caminho "+caminho[k][0]+caminho[k][1])
 					retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
-					alert("voltou, k = "+k+" com caminho.length"+caminho.length+"com retorno "+retorno)
 					if(!retorno && k == 0 && caminho.length > 1){ 
 						k = 1
 						retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
