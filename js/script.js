@@ -27,17 +27,16 @@ function aiMove(board) {
 
 function gameOver(board, player = 1) {
 	aux = [board.length,board.length]
-	corte = new Array(aux)
 	retorno = false
 	for (let i = board.length-1; i >= 0; i--){
-		if (buscaProfundidade(i,board.length-1, board, player, corte)){
+		if (buscaProfundidade(i,board.length-1, board, player, corte, rodada)){
 			retorno = true;
 		}
 	}
 	return retorno;
 }
 
-function eliminaRedundancia (linha, coluna, dimensao, corte, board){
+function geraCandidatos(linha, coluna, dimensao){
 	//forma os candidatos
 	alert("linha")
 	alert(linha)
@@ -48,79 +47,56 @@ function eliminaRedundancia (linha, coluna, dimensao, corte, board){
 	if (linha > 0){
 		candidatos.push([linha-1, coluna])
 	}
-	alert("candidatos 1")
-	alert(candidatos)
 	if (linha > 0 && coluna < dimensao){
 		candidatos.push([linha-1, coluna+1])
 	}
-	alert("candidatos 1")
-	alert(candidatos)
 	if (coluna > 0){
 		candidatos.push([linha, coluna-1])
 	}
-	alert("candidatos 1")
-	alert(candidatos)
 	if (coluna < dimensao){
 		candidatos.push([linha, coluna+1])
 	}
-	alert("candidatos 1")
-	alert(candidatos)
 	if (linha < dimensao && coluna > 0){
 		candidatos.push([linha+1, coluna-1])
 	}
-	alert("candidatos 1")
-	alert(candidatos)
 	if (linha < dimensao){
 		candidatos.push([linha+1, coluna])
 	}
-	alert("candidatos 1")
-	alert(candidatos)
-	if (candidatos) {
-	//retira os nós já visitados
-		for(let i=0; i < candidatos.length; i++){
-			alert("i = ")
-			alert(i)
-			recusa = false
-			for(let j=0; j < corte.length; j++){
-			alert("j = ")
-			alert(j)
-			alert("candidatos i = ")
-			alert(candidatos[i])
-			alert("corte j = ")
-			alert(corte[j])
+	return candidatos
+}
 
+function eliminaRedundancia (linha, coluna, filhos, corte){
+	if (filhos) {
+	//retira os nós já visitados
+		for(let i=0; i < filhos.length; i++){
+			recusa = false
+			for(let j=0; j < filhos.length; j++){
 				if (candidatos[i] == corte[j]){
 					recusa = true
 				}
-			alert("recusa = ")
-			alert(recusa)
-
-			if(!recusa){ 
-				escolhidos.push(candidatos[i])
-				corte.push(escolhidos)
 			}
-			alert("escolhidos = ")
-			alert(escolhidos)
-
+			if(!recusa){ 
+				escolhidos.push(filhos[i])
+			} else {
+					corte.push(filhos[i])
 			}
 		}
 	}
-	alert("corte final")
-	alert(candidatos)
-	alert("escolhidos final")
-	alert(escolhidos)
 	return escolhidos
 }
 
-function buscaProfundidade(linha, coluna, board, player, corte){
-	alert("o lugar pesquisado é linha - "+linha+" coluna - "+ coluna)
-	filhos = new Array()
+function buscaProfundidade(linha, coluna, board, player, corte, rodada){
 	if (coluna == 0) {
 		return true
-	} else {
-				filhos = eliminaRedundancia(linha, coluna, board.length-1, corte)
-				alert(filhos)
-				corte.push([linha, coluna])
+	} else {	
+				aux = new Array()
+				corte = new Array(aux)
+				escolhidos = new Array(aux)
+				filhos.push([linha, coluna])
+				filhos.push(geraCandidatos(linha, coluna, board.length-1))
+				alert("filhos = "+ filhos)
+				escolhidos = eliminaRedundancia(linha, coluna, filhos, corte)
+				alert("escolhidos = "+escolhidos)
 				for(let i=0; i < filhos.length-1; i++){
 					return buscaProfundidade(filhos[i][0], filhos[i][1], board, player, corte)
 				}
