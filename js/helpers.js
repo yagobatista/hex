@@ -97,7 +97,6 @@ function checaFilho(escolhidos, player, board, corta){
 
 
 function buscaProfundidade(linha, coluna, board, player, corte, horizontal){
-alert(horizontal)
 //vê se o jogador tem um caminho de ponta a ponta
 	var caminho = new Array()
 	if ((horizontal && coluna == 0) || (!horizontal && linha == 0)) {
