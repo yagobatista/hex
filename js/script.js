@@ -6,6 +6,7 @@ function playerMove(board, line, column) {
         } else {
             setTimeout(() => {
                 aiMove(board);
+//		iaMarco(board, -1)
             }, 500);
         }
     }

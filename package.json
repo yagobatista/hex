@@ -1,0 +1,11 @@
+{
+  "name": "hex-trabalho_ia",
+  "version": "1.0.0",
+  "description": "Este arquivo é para o heroku implementar o site",
+  "scripts": {
+    "start": "harp server --port $PORT"
+  },
+  "dependencies": {
+    "harp": "*"
+  }
+}
