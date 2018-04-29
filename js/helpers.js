@@ -101,7 +101,6 @@ alert(horizontal)
 //vê se o jogador tem um caminho de ponta a ponta
 	var caminho = new Array()
 	if ((horizontal && coluna == 0) || (!horizontal && linha == 0)) {
-		alert(horizontal+"linha "+linha+" coluna "+coluna)
 		return true
 	} else {
 				filhos = geraCandidatos(linha, coluna, board.length-1)
