@@ -96,10 +96,12 @@ function checaFilho(escolhidos, player, board, corta){
 }
 
 
-function buscaProfundidade(linha, coluna, board, player, corte){
+function buscaProfundidade(linha, coluna, board, player, corte, horizontal){
+alert(horizontal)
 //vê se o jogador tem um caminho de ponta a ponta
 	var caminho = new Array()
-	if ((player > 0 && coluna == 0) || (player < 0 && linha == 0)) {
+	if ((horizontal && coluna == 0) || (!horizontal && linha == 0)) {
+		alert(horizontal+"linha "+linha+" coluna "+coluna)
 		return true
 	} else {
 				filhos = geraCandidatos(linha, coluna, board.length-1)
@@ -108,10 +110,10 @@ function buscaProfundidade(linha, coluna, board, player, corte){
 				corte.push([linha, coluna])
 				if(caminho.length > 0){
 					var k=0
-					retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
+					retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte, horizontal)
 					if(!retorno && k == 0 && caminho.length > 1){ 
 						k = 1
-						retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
+						retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte, horizontal)
 					return retorno
 					}
 					return retorno
