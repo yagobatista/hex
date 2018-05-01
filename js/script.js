@@ -6,7 +6,6 @@ function playerMove(board, line, column) {
         } else {
             setTimeout(() => {
                 aiMove(board);
-//		iaMarco(board, -1)
             }, 500);
         }
     }
@@ -28,15 +27,12 @@ function aiMove(board) {
 
 function gameOver(board, player = 1) {
 
-	aux = [board.length,board.length]
-	corte = new Array(aux)
-	retorno = false
-	for (let i = board.length-1; i >= 0; i--){
-		if (((board[board.length-1][i] == player) && (buscaProfundidade(board.length-1, i, board, player, corte, false)) ) || ((board[i][board.length-1] == player) && (buscaProfundidade(i,board.length-1, board, player, corte, true)))) {
-			retorno = true;
-		} 
-	}
-	return retorno;
+    aux = [board.length, board.length]
+    corte = new Array(aux)
+    for (let i = board.length - 1; i >= 0; i--) {
+        if (((board[board.length - 1][i] == player) && (buscaProfundidade(board.length - 1, i, board, player, corte, false))) || ((board[i][board.length - 1] == player) && (buscaProfundidade(i, board.length - 1, board, player, corte, true)))) {
+            return true;
+        }
+    }
+    return false;
 }
-
-
