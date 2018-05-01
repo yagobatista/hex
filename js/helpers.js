@@ -50,6 +50,9 @@ function geraCandidatos(linha, coluna, dimensao){
 	if (linha > 0){
 		candidatos.unshift([linha-1, coluna])
 	}
+	if (linha < dimensao){
+		candidatos.unshift([linha+1, coluna])
+	}
 	if (linha > 0 && coluna < dimensao){
 		candidatos.unshift([linha-1, coluna+1])
 	}
@@ -57,9 +60,7 @@ function geraCandidatos(linha, coluna, dimensao){
 	if (coluna < dimensao){
 		candidatos.unshift([linha, coluna+1])
 	}
-	if (linha < dimensao){
-		candidatos.unshift([linha+1, coluna])
-	}
+
 	return candidatos
 }
 
@@ -86,13 +87,13 @@ function eliminaRedundancia (linha, coluna, filhos, corte){
 	return escolhidos
 }
 
-function checaFilho(escolhidos, player, board, corta, especulacao){
+function checaFilho(escolhidos, player, board, corta, elimina=true){
 //vê se o filho tem peça do jogador
 	caminho = new Array()
 	for(let i=0; i<escolhidos.length; i++) {
 		if(player == board[escolhidos[i][0]][escolhidos[i][1]]){
 			caminho.push(escolhidos[i])
-		} else {
+		} else if (elimina) {
 			corta.push(escolhidos[i])
 		}
 	}
@@ -189,9 +190,11 @@ function especula(board, player = 1){
 	aux = [board.length,board.length]
 	corte = new Array(aux)
 	var fila = new Array()
-	let linha
-	let coluna
-	fila = buscaLargura(board.length-1, board.length-1, board, player, fila, corte) 
+	let linha = board.length
+	let coluna = board.length
+	let condicao = false
+	for(condicao = board.length-1; condicao > 0; condicao--){
+	fila = buscaLargura(condicao, board.length-1, board, player, fila, corte) 
 		jogada = false
 		contador = 0
 		do {
@@ -199,12 +202,17 @@ function especula(board, player = 1){
 			linha = par[0]
 			if(linha == undefined) { linha = fila[0] }
 			coluna = par[1]
-if(coluna == undefined) { coluna = par }
+			if(coluna == undefined) { coluna = par }
 			contador++
 			if(0 == board[linha][coluna]){ jogada = true }
 			fila = fila.pop()
-		} while ((jogada == false) && (contador < (board.length*board.length/2)))
-	return [linha, coluna];
+		} while ((jogada == false) && (contador < (board.length*board.length/2) && (fila.length >= 0)))
+	if(linha >=0 && coluna >=0 ){
+		condicao = true
+		return [linha, coluna];
+	} 
+	alert("!!!!!!!!!!!!!!!!!!!!!!!!!!!rodou")
+	}
 }
 
 
