@@ -9,17 +9,24 @@ function makeBoard(board) {
         boardString += '</div>';
     }
     document.getElementsByClassName('board')[0].innerHTML = boardString;
-    //action of the event of click
-    let hexagonos = document.getElementsByClassName('hex');
-    for (let index = 0; index < hexagonos.length; index++) {
-        hexagonos[index].onclick = () => {
-            const column = index % board.length;
-            const line = (index - column) / board[0].length;
-            playerMove(board, line, column);
-        };
-
-    }
+	var fimJogo = false
+	let contador = 0
+	while(!fimJogo){
+                aiMove(board);
+	    if(gameOver(board, -1)){
+		fimJogo = true
+		alert("A IA aleatória ganhou")
+	} else {
+                aiMoveLargura(board);
+	}
+	if(gameOver(board, 1)){
+	fimJogo = true
+	alert("A IA com busca na largura ganhou")	}
+	contador++
+	alert("proxima rodada")
+	}
 }
+
 
 
 function markPosition(board, line, column, player = null) {
@@ -34,23 +41,24 @@ function markPosition(board, line, column, player = null) {
 function geraCandidatos(linha, coluna, dimensao){
 	//forma os candidatos
 	candidatos = new Array()
-	if (linha > 0){
-		candidatos.push([linha-1, coluna])
-	}
-	if (linha > 0 && coluna < dimensao){
-		candidatos.push([linha-1, coluna+1])
-	}
 	if (coluna > 0){
-		candidatos.push([linha, coluna-1])
-	}
-	if (coluna < dimensao){
-		candidatos.push([linha, coluna+1])
+		candidatos.unshift([linha, coluna-1])
 	}
 	if (linha < dimensao && coluna > 0){
-		candidatos.push([linha+1, coluna-1])
+		candidatos.unshift([linha+1, coluna-1])
+	}
+	if (linha > 0){
+		candidatos.unshift([linha-1, coluna])
+	}
+	if (linha > 0 && coluna < dimensao){
+		candidatos.unshift([linha-1, coluna+1])
+	}
+
+	if (coluna < dimensao){
+		candidatos.unshift([linha, coluna+1])
 	}
 	if (linha < dimensao){
-		candidatos.push([linha+1, coluna])
+		candidatos.unshift([linha+1, coluna])
 	}
 	return candidatos
 }
@@ -78,7 +86,7 @@ function eliminaRedundancia (linha, coluna, filhos, corte){
 	return escolhidos
 }
 
-function checaFilho(escolhidos, player, board, corta){
+function checaFilho(escolhidos, player, board, corta, especulacao){
 //vê se o filho tem peça do jogador
 	caminho = new Array()
 	for(let i=0; i<escolhidos.length; i++) {
@@ -95,6 +103,22 @@ function checaFilho(escolhidos, player, board, corta){
 	}
 }
 
+function checaCaminho(escolhidos, player, board, corta, elimina=true){
+//vê se o filho tem peça do jogador ou branca
+	caminho = new Array()
+	for(let i=0; i<escolhidos.length; i++) {
+		if((player == board[escolhidos[i][0]][escolhidos[i][1]]) || (0 == board[escolhidos[i][0]][escolhidos[i][1]])){
+			caminho.push(escolhidos[i])
+		} else if (elimina) {
+			corta.push(escolhidos[i])
+		}
+	}
+	if(caminho.length > 0){
+		return caminho
+	} else {
+		return false
+	}
+}
 
 function buscaProfundidade(linha, coluna, board, player, corte, horizontal){
 //vê se o jogador tem um caminho de ponta a ponta
@@ -121,6 +145,25 @@ function buscaProfundidade(linha, coluna, board, player, corte, horizontal){
 	}
 }
 
+function buscaLargura(linha, coluna, board, player, fila, corte){
+if(fila.length > 0 ) { fila.pop() }
+	var resultado = new Array()
+		if ((coluna == 0) || (linha == 0)) {
+			resultado = [linha, coluna]
+			return resultado
+		} else {
+		corte.push([linha,coluna])
+		candidatos = geraCandidatos(linha, coluna, board.length-1)
+		escolhidos = eliminaRedundancia(linha, coluna, candidatos, corte)
+		filhos = checaCaminho(escolhidos, player, board, fila, false)
+		fila.push(filhos)
+		resultado.push(buscaLargura(fila[0][0][0], fila[0][0][1], board, player, fila, corte))
+		resultado.push([linha, coluna])
+		return resultado
+		}
+
+}
+
 function calculaPontos(board, player = 1){
 	let pontos = 0
 	let size = board.length
@@ -142,53 +185,26 @@ function calculaPontos(board, player = 1){
 	return pontos
 }
 
-function iaMarco(board, player){
-	nota = 0
-	notas = new Array()
-	score = 0
-	jogada_escolhida = new Array()
-	rota = new Array()
-	rota_prioritaria = new Array() 
-	simulacao = board.slice(0)
+function especula(board, player = 1){
 	aux = [board.length,board.length]
 	corte = new Array(aux)
-
-	for (let i = 0; i < simulacao.length; i++){
-		if(simulacao[0][i] != 1){
-			simulacao[0][i] = -1
-		}
-	}
-	for (let i = simulacao.length-1; i >= 0; i--){
-		if ((player < 0 && simulacao[simulacao.length-1][i] == player) && (especulaProfundidade(simulacao.length-1, i, simulacao, player, corte, notas, rota)) || ((player > 0 && simulacao[i][simulacao.length-1] == player) && (especulaProfundidade(i,board.length-1, simulacao, player, corte, notas, rota)))) {
-//seleciona score mais favorável das notas
-			return score
-		} 
-	}
-	return retorno;
+	var fila = new Array()
+	let linha
+	let coluna
+	fila = buscaLargura(board.length-1, board.length-1, board, player, fila, corte) 
+		jogada = false
+		contador = 0
+		do {
+			par = fila.pop()
+			linha = par[0]
+			if(linha == undefined) { linha = fila[0] }
+			coluna = par[1]
+if(coluna == undefined) { coluna = par }
+			contador++
+			if(0 == board[linha][coluna]){ jogada = true }
+			fila = fila.pop()
+		} while ((jogada == false) && (contador < (board.length*board.length/2)))
+	return [linha, coluna];
 }
 
-function especulaProfundidade(linha, coluna, board, player, corte){
-//algorítmo para dificultar a vitória do adversário no jogo
-	var caminho = new Array()
-	if ((player > 0 && coluna == 0) || (player < 0 && linha == 0)) {
-		return true
-	} else {
-		filhos = geraCandidatos(linha, coluna, board.length-1)
-		escolhidos = eliminaRedundancia(linha, coluna, filhos, corte)
-		caminho = checaFilho(escolhidos, player, board, corte)
-		corte.push([linha, coluna])
-		if(caminho.length > 0){
-			var k=0
-			retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
-			if(!retorno && k == 0 && caminho.length > 1){ 
-				k = 1
-				retorno = buscaProfundidade(caminho[k][0], caminho[k][1], board, player, corte)
-			return retorno
-			}
-			return retorno
-		} else { 
-			return retorno
-		}
-	}
-}
 

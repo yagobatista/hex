@@ -6,7 +6,6 @@ function playerMove(board, line, column) {
         } else {
             setTimeout(() => {
                 aiMove(board);
-//		iaMarco(board, -1)
             }, 500);
         }
     }
@@ -14,16 +13,27 @@ function playerMove(board, line, column) {
 
 function aiMove(board) {
     // random ai move
+    par = new Array()
     let line;
     let column;
-    do {
+   do {
         line = parseInt(Math.random() * board.length);
         column = parseInt(Math.random() * board.length);
     } while (board[line][column] !== 0);
+//marca posicao e vê se ganhou
     markPosition(board, line, column, 'ai');
-    if (gameOver(board, -1)) {
-        alert('A ia ganhou!')
-    }
+}
+
+function aiMoveLargura(board) {
+    // movimento ai busca largura
+    par = new Array()
+    let line;
+    let column;
+	par = especula(board)
+	line = par[0]
+	column = par[1]
+//marca posicao e vê se ganhou
+    markPosition(board, line, column);
 }
 
 function gameOver(board, player = 1) {
