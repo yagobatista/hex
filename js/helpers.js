@@ -87,14 +87,14 @@ function eliminaRedundancia (linha, coluna, filhos, corte){
 	return escolhidos
 }
 
-function checaFilho(escolhidos, player, board, corta, elimina=true){
+function checaFilho(escolhidos, player, board, corte, especula=false){
 //vê se o filho tem peça do jogador
 	caminho = new Array()
 	for(let i=0; i<escolhidos.length; i++) {
-		if(player == board[escolhidos[i][0]][escolhidos[i][1]]){
+		if((player == board[escolhidos[i][0]][escolhidos[i][1]]) || ((especula) && (0 == board[escolhidos[i][0]][escolhidos[i][1]]))){
 			caminho.push(escolhidos[i])
-		} else if (elimina) {
-			corta.push(escolhidos[i])
+		} else {
+			corte.push(escolhidos[i])
 		}
 	}
 	if(caminho.length > 0){
@@ -104,22 +104,6 @@ function checaFilho(escolhidos, player, board, corta, elimina=true){
 	}
 }
 
-function checaCaminho(escolhidos, player, board, corta, elimina=true){
-//vê se o filho tem peça do jogador ou branca
-	caminho = new Array()
-	for(let i=0; i<escolhidos.length; i++) {
-		if((player == board[escolhidos[i][0]][escolhidos[i][1]]) || (0 == board[escolhidos[i][0]][escolhidos[i][1]])){
-			caminho.push(escolhidos[i])
-		} else if (elimina) {
-			corta.push(escolhidos[i])
-		}
-	}
-	if(caminho.length > 0){
-		return caminho
-	} else {
-		return false
-	}
-}
 
 function buscaProfundidade(linha, coluna, board, player, corte, horizontal){
 //vê se o jogador tem um caminho de ponta a ponta
@@ -156,7 +140,7 @@ if(fila.length > 0 ) { fila.pop() }
 		corte.push([linha,coluna])
 		candidatos = geraCandidatos(linha, coluna, board.length-1)
 		escolhidos = eliminaRedundancia(linha, coluna, candidatos, corte)
-		filhos = checaCaminho(escolhidos, player, board, fila, false)
+		filhos = checaFilho(escolhidos, player, board, corte, true)
 		fila.push(filhos)
 		resultado.push(buscaLargura(fila[0][0][0], fila[0][0][1], board, player, fila, corte))
 		resultado.push([linha, coluna])
@@ -189,7 +173,7 @@ function calculaPontos(board, player = 1){
 function especula(board, player = 1){
 	aux = [board.length,board.length]
 	corte = new Array(aux)
-	var fila = new Array()
+	var fila = new Array(aux)
 	let linha = board.length
 	let coluna = board.length
 	let condicao = false
@@ -211,7 +195,6 @@ function especula(board, player = 1){
 		condicao = true
 		return [linha, coluna];
 	} 
-	alert("!!!!!!!!!!!!!!!!!!!!!!!!!!!rodou")
 	}
 }
 
