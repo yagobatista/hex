@@ -1,9 +1,12 @@
-function makeBoard(board) {
+function makeBoard(size) {
     //render of t
+    let board = new Array();
     let boardString = '';
-    for (let i = 0; i < board.length; i++) {
+    for (let i = 0; i < size; i++) {
+        board[i] = new Array();
         boardString += `<div class="hex-row n${i}">`;
-        for (let j = 0; j < board[i].length; j++) {
+        for (let j = 0; j < size; j++) {
+            board[i][j] = 0;
             boardString += ' <div class="hex"> <div class="top"></div> <div class="middle"></div> <div class="bottom"></div> </div>';
         }
         boardString += '</div>';
@@ -13,7 +16,7 @@ function makeBoard(board) {
     let hexagonos = document.getElementsByClassName('hex');
     for (let index = 0; index < hexagonos.length; index++) {
         hexagonos[index].onclick = () => {
-            const column = index % board.length;
+            const column = index % size;
             const line = (index - column) / board[0].length;
             playerMove(board, line, column);
         };
