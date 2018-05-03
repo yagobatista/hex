@@ -14,7 +14,9 @@
             <div>
                 <label for="column">Escolha um tamanho de board:</label>
                 <input type="text" name="column" id="">
-
+                <button type="button" name="comecar">Começar</button>
+                <button type="button" name="parar" class="hide">Parar</button>
+                <button type="button" name="reiniciar" class="hide">Reiniciar</button>
             </div>
             <div class="board">
 
@@ -25,24 +27,31 @@
     <script src="js/aiHelpers.js"></script>
     <script src="js/stopConditionHelpers.js"></script>
     <script src="js/InterfaceHelpers.js"></script>
-    <script src="js/helpers.js"></script>
     <script src="js/script.js"></script>
     <script type="text/javascript">
-        document.getElementsByName('column')[0].onchange = (hex) => {
-            size = parseInt(hex.currentTarget.value);
+        document.getElementsByName('comecar')[0].onclick = (comecar) => {
+            size = parseInt(document.getElementsByName('column')[0].value);
             if (Number.isInteger(size) > 0) {
-                let board = new Array();
-                for (let i = 0; i < size; i++) {
-                    board[i] = new Array();
-                    for (let j = 0; j < size; j++) {
-                        board[i][j] = 0;
-                    }
-                }
-                makeBoard(board);
-                hex.currentTarget.disabled = true;
+                makeBoard(size);
+                document.getElementsByName('column')[0].disabled = true;
+                document.getElementsByName('parar')[0].className = 'show';
+                comecar.currentTarget.disabled = true;
             } else {
                 alert('Digite um valor válido!');
             }
+        };
+        document.getElementsByName('reiniciar')[0].onclick = () => {
+            document.getElementsByName('reiniciar')[0].className = 'hide';
+            document.getElementsByName('parar')[0].className = 'hide';
+            document.getElementsByName('comecar')[0].className = 'show';
+            document.getElementsByName('comecar')[0].disabled = false;
+            document.getElementsByName('column')[0].disabled = false;
+        };
+        document.getElementsByName('parar')[0].onclick = () => {
+            document.getElementsByName('parar')[0].className = 'hide';
+            document.getElementsByName('comecar')[0].className = 'show';
+            document.getElementsByName('comecar')[0].disabled = false;
+            document.getElementsByName('column')[0].disabled = false;
         };
     </script>
 

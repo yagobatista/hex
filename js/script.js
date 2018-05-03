@@ -2,6 +2,9 @@ function playerMove(board, line, column) {
     if (board[line][column] === 0) {
         markPosition(board, line, column);
         if (gameOver(board)) {
+            document.getElementsByName('reiniciar')[0].className = 'show';
+            document.getElementsByName('parar')[0].className = 'hide';
+            document.getElementsByName('comecar')[0].className = 'hide';
             alert('Você ganhou!');
         } else {
             setTimeout(() => {
