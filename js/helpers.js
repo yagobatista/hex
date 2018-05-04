@@ -66,6 +66,7 @@ function checaFilho(escolhidos, player, board, corta) {
 function buscaProfundidade(linha, coluna, board, player, corte, horizontal) {
 	//vê se o jogador tem um caminho de ponta a ponta
 	var caminho = new Array()
+	var retorno = false
 	if ((horizontal && coluna == 0) || (!horizontal && linha == 0)) {
 		return true
 	} else {
@@ -107,6 +108,18 @@ function calculaPontos(board, player = 1) {
 	alert(pontos)
 	alert(buscaProfundidade(board.length - 1, board.length - 1, board, player))
 	return pontos
+}
+
+function aiMoveLargura(board) {
+    // movimento ai busca largura
+    par = new Array()
+    let line;
+    let column;
+	par = especula(board)
+	line = par[0]
+	column = par[1]
+//marca posicao e vê se ganhou
+    markPosition(board, line, column);
 }
 
 function iaMarco(board, player) {
