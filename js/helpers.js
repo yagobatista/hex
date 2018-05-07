@@ -187,15 +187,18 @@ return maxi
 
 }
 
-function calculaMinimax(board, player = 1){
+
+function calculaMinimax(board, player = 1, profundidade = 0){
 	let brancas = []
 	let jogada
 	let jogador = []
 	let adversario = []
 	var boardLocal
-	var retorno  = [0,[0,0]]
-	var provisorio
-//separa peças em três vetores
+	var retorno  = [-10*player,[0,0], profundidade]
+	var provisorio  = [0,[0,0], profundidade]
+	
+	
+	//separa peças em três vetores
 //alert(++contador)
 	   for (let i = 0; i < size; i++) {
                     for (let j = 0; j < size; j++) {
@@ -214,17 +217,18 @@ function calculaMinimax(board, player = 1){
 //	if(jogador.length > 0) { alert("jogador "+JSON.stringify(jogador)) }
 
 	//calculo do MINIMAX
+	contadorMinimax = 0
 	while((jogada = brancas.pop()) && (retorno[0] != player)){ //para tirar o alfa beta basta tirar a última condição do and
 //alert("contador"+contador)
 		boardLocal = board.slice()
 //	alert(board)
 //	alert(JSON.stringify([player,[jogada[0],jogada[1]]]))
 	boardLocal[jogada[0]][jogada[1]] = player
-		if( gameOver(boardLocal, player) ){ provisorio = [player,[jogada[0],jogada[1]]] } else { provisorio = calculaMinimax(boardLocal, -1*(player)) }	
-		if(provisorio[0]==player){ retorno = provisorio }
+	if( gameOver(boardLocal, player) ){ provisorio = [player,[jogada[0],jogada[1]]], profundidade } else { provisorio = calculaMinimax(boardLocal, -1*(player), ++profundidade) }	
 	boardLocal[jogada[0]][jogada[1]] = 0
+	if( (player > 0 && provisorio[0] > retorno[0]) || (player < 0 && provisorio[0] < retorno[0])  ){ retorno = provisorio }
 //	alert(boardLocal+"esta dando gameOver"+gameOver(boardLocal,player)+"e retornando "+JSON.stringify(retorno))
-		
+	
 	}
 return retorno
 }
