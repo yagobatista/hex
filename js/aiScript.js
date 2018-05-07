@@ -36,3 +36,11 @@ function randomMove(board) {
         alert('A ia ganhou!')
     }
 }
+
+function aiUm(params) {
+
+}
+
+function aiDois(params) {
+
+}

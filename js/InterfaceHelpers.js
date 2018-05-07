@@ -1,4 +1,4 @@
-function makeBoard(size) {
+function makeBoard(size, modo) {
     //render of t
     let board = new Array();
     let boardString = '';
@@ -13,21 +13,22 @@ function makeBoard(size) {
     }
     document.getElementsByClassName('board')[0].innerHTML = boardString;
     //action of the event of click
-    let hexagonos = document.getElementsByClassName('hex');
-    for (let index = 0; index < hexagonos.length; index++) {
-        hexagonos[index].onclick = () => {
-            const column = index % size;
-            const line = (index - column) / board[0].length;
-            playerMove(board, line, column);
-        };
+    if (modo === 0 || modo === 1 || modo === 2) {
+        let hexagonos = document.getElementsByClassName('hex');
+        for (let index = 0; index < hexagonos.length; index++) {
+            hexagonos[index].onclick = () => {
+                const column = index % size;
+                const line = (index - column) / board[0].length;
+                playerMove(board, line, column, modo);
+            };
 
+        }
     }
 }
 
 
 function markPosition(board, line, column, player = null) {
     player = player && `${ player }-` || '';
-    //alert(player)
     const positionValue = player === "ai-" ? -1 : 1;
     const hexagonos = document.getElementsByClassName('hex');
     board[line][column] = positionValue;

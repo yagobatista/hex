@@ -12,8 +12,14 @@
     <main>
         <div class="container">
             <div>
-                <label for="column">Escolha um tamanho de board:</label>
+                <h2>Escolha um tamanho de board:</h2>
                 <input type="text" name="column" id="">
+                <select name="modo" id="">
+                    <option value="0" selected>Eu contra modo aleatório</option>
+                    <option value="1">Eu contra IA1</option>
+                    <option value="2">Eu contra IA2</option>
+                    <option value="3" disabled>IA contra IA</option>
+                </select>
                 <button type="button" name="comecar">Começar</button>
                 <button type="button" name="parar" class="hide">Parar</button>
                 <button type="button" name="reiniciar" class="hide">Reiniciar</button>
@@ -24,17 +30,19 @@
 
         </div>
     </main>
-    <script src="js/aiHelpers.js"></script>
     <script src="js/stopConditionHelpers.js"></script>
     <script src="js/InterfaceHelpers.js"></script>
+    <script src="js/aiScript.js"></script>
     <script src="js/script.js"></script>
     <script type="text/javascript">
         document.getElementsByName('comecar')[0].onclick = (comecar) => {
             size = parseInt(document.getElementsByName('column')[0].value);
             if (Number.isInteger(size) > 0) {
-                makeBoard(size);
+                let modo = parseInt(document.getElementsByName('modo')[0].value);
+                makeBoard(size, modo);
                 document.getElementsByName('column')[0].disabled = true;
                 document.getElementsByName('parar')[0].className = 'show';
+                document.getElementsByName('modo')[0].disabled = true;
                 comecar.currentTarget.disabled = true;
             } else {
                 alert('Digite um valor válido!');
@@ -46,12 +54,14 @@
             document.getElementsByName('comecar')[0].className = 'show';
             document.getElementsByName('comecar')[0].disabled = false;
             document.getElementsByName('column')[0].disabled = false;
+            document.getElementsByName('modo')[0].disabled = false;
         };
         document.getElementsByName('parar')[0].onclick = () => {
             document.getElementsByName('parar')[0].className = 'hide';
             document.getElementsByName('comecar')[0].className = 'show';
             document.getElementsByName('comecar')[0].disabled = false;
             document.getElementsByName('column')[0].disabled = false;
+            document.getElementsByName('modo')[0].disabled = false;
         };
     </script>
 

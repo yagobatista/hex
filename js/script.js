@@ -1,4 +1,4 @@
-function playerMove(board, line, column) {
+function playerMove(board, line, column, modo) {
     if (board[line][column] === 0) {
         markPosition(board, line, column);
         if (gameOver(board)) {
@@ -8,7 +8,15 @@ function playerMove(board, line, column) {
             alert('Você ganhou!');
         } else {
             setTimeout(() => {
-                randomMove(board);
+                if(modo === 0) {
+                    randomMove(board);
+                } else if (modo === 1) {
+                    //mudar nome
+                    aiUm();
+                } else if (modo === 2) {
+                    //mudar nome
+                    aiDois();
+                }  
             }, 500);
         }
     }
