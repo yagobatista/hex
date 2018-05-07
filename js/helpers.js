@@ -194,7 +194,7 @@ function calculaMinimax(board, player = 1, profundidade = 0){
 	let jogador = []
 	let adversario = []
 	var boardLocal
-	var retorno  = [-10*player,[0,0], profundidade]
+	var retorno  = [-10*player,[0,0], 100*profundidade]
 	var provisorio  = [0,[0,0], profundidade]
 	
 	
@@ -226,7 +226,7 @@ function calculaMinimax(board, player = 1, profundidade = 0){
 	boardLocal[jogada[0]][jogada[1]] = player
 	if( gameOver(boardLocal, player) ){ provisorio = [player,[jogada[0],jogada[1]]], profundidade } else { provisorio = calculaMinimax(boardLocal, -1*(player), ++profundidade) }	
 	boardLocal[jogada[0]][jogada[1]] = 0
-	if( (player > 0 && provisorio[0] > retorno[0]) || (player < 0 && provisorio[0] < retorno[0])  ){ retorno = provisorio }
+	if( ((player > 0 && provisorio[0] > retorno[0]) || (player < 0 && provisorio[0] < retorno[0])) && (provisorio[2] < retorno[2]) ){ retorno = provisorio }
 //	alert(boardLocal+"esta dando gameOver"+gameOver(boardLocal,player)+"e retornando "+JSON.stringify(retorno))
 	
 	}
