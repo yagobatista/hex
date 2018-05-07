@@ -1,44 +1,7 @@
-function makeBoard(board) {
-    //render of t
-    let boardString = '';
-    for (let i = 0; i < board.length; i++) {
-        boardString += `<div class="hex-row n${i}">`;
-        for (let j = 0; j < board[i].length; j++) {
-            boardString += ' <div class="hex"> <div class="top"></div> <div class="middle"></div> <div class="bottom"></div> </div>';
-        }
-        boardString += '</div>';
-    }
-    document.getElementsByClassName('board')[0].innerHTML = boardString;
-	var fimJogo = false
-	let contador = 0
-	while(!fimJogo){
-                aiMove(board);
-	    if(gameOver(board, -1)){
-		fimJogo = true
-		alert("A IA aleatória ganhou")
-	} else {
-                aiMoveLargura(board);
-	}
-	if(gameOver(board, 1)){
-	fimJogo = true
-	alert("A IA com busca na largura ganhou")	}
-	contador++
-	alert("proxima rodada")
-	}
-}
 
-
-
-function markPosition(board, line, column, player = null) {
-    player = player && `${ player }-` || '';
-	//alert(player)
-    const positionValue = player === "ai-" ? -1 : 1;
-    const hexagonos = document.getElementsByClassName('hex');
-    board[line][column] = positionValue;
-    hexagonos[(line * board.length) + column].className = `hex ${ player }selected`;
-}
 
 function geraCandidatos(linha, coluna, dimensao){
+//alert("entrou candidatos linha"+linha+"coluna "+coluna+"dimensao "+dimensao)
 	//forma os candidatos
 	candidatos = new Array()
 	if (coluna > 0){
@@ -60,7 +23,7 @@ function geraCandidatos(linha, coluna, dimensao){
 	if (coluna < dimensao){
 		candidatos.unshift([linha, coluna+1])
 	}
-
+//alert("todos os candidatos sai da seguinte maneira "+JSON.stringify(candidatos))
 	return candidatos
 }
 
@@ -105,7 +68,7 @@ function checaFilho(escolhidos, player, board, corte, especula=false){
 }
 
 
-function buscaProfundidade(linha, coluna, board, player, corte, horizontal){
+function buscaProfundidade(linha, coluna, board, player, corte=[], horizontal){
 //vê se o jogador tem um caminho de ponta a ponta
 	var caminho = new Array()
 	if ((horizontal && coluna == 0) || (!horizontal && linha == 0)) {
@@ -150,25 +113,199 @@ if(fila.length > 0 ) { fila.pop() }
 }
 
 function calculaPontos(board, player = 1){
-	let pontos = 0
-	let size = board.length
-	let k = 0
+	let brancas = []
+	let brancas2 = []
+	let jogada
+	let seleciona = []
+	let jogador = []
+	let adversario = []
+	let seqJogador = []
+	let seqAdversario = []
+	let seqCalculo = []
+	let baseCalculo = []
+	let retorno = []	
+	var mini = 1000
+	var maxi = [0]
+//separa peças em três vetores
 	   for (let i = 0; i < size; i++) {
-                    for (let j = 0; j < size-1; j++) {
-                        if (player > 0 && board[i][j] == player && ((board[i][j+1] == player) || ( i > 0 && board[i-1][j+1] == player))){
-			pontos += 10 
-			alert(pontos+" ganhos em i = "+i+" e j = "+j+"pelo player = "+board[i][j]+" vulgo "+player+"vizinho de = "+board[i][j+1])
-			}
-                        if (player < 0 && board[i][j] < 0 == player && board[i+1][j] == player && false){
-			pontos += 10 
-			}
-                    }
-		k++
-           }
-	alert(pontos)
-	alert(buscaProfundidade(board.length-1, board.length-1, board, player))
-	return pontos
+                    for (let j = 0; j < size; j++) {
+			if(board[i][j] == 0){
+				brancas.push([i,j])
+				brancas2.push([i,j])
+			} else if (board[i][j] == player){
+				adversario.push([i,j])
+			} else {
+				jogador.push([i,j])
+		   	}
+	     	    }
+	   }
+
+//alert("brancas "+JSON.stringify(brancas))
+//alert("adversario "+JSON.stringify(adversario))
+//if(jogador.length > 0) { alert("jogador "+JSON.stringify(jogador)) }
+
+//chama os métodos que criam as sequências de cada jogador
+seqJogador = montaSequencia(jogador,board)
+//alert("sequencia jogador"+ JSON.stringify(seqJogador)+" length "+seqJogador.length)
+//seqAdversario = montaSequencia(adversario,board)
+//alert("sequencia adversário"+ JSON.stringify(seqAdversario)+" length "+seqAdversario.length)
+
+//calculo do MAX
+while(jogada = brancas2.pop()){
+	baseCalculo = jogador.slice();
+//if('[5,4]' == JSON.stringify(jogada)){ alert("base "+JSON.stringify(baseCalculo)+"jogada sendo analisada "+JSON.stringify(jogada)) }
+	baseCalculo.unshift(jogada)
+//if('[5,4]' == JSON.stringify(jogada)){alert("base mais jogada "+JSON.stringify(baseCalculo)+"jogada sendo analisada "+JSON.stringify(jogada))}
+	seqCalculo = montaSequencia(baseCalculo, board)
+//if('[5,4]' == JSON.stringify(jogada)){alert("sequencia montada "+JSON.stringify(seqCalculo))}
+	retorno = funcaoAvaliacao(seqCalculo)
+//if('[5,4]' == JSON.stringify(jogada)){alert("retornofuncao"+JSON.stringify(retorno))}
+	while(seleciona = retorno.pop()){
+		if(seleciona[0]>maxi[0]) { maxi = seleciona}
+	}	
 }
+
+// calculo do MIN
+//while(jogada = brancas.pop()){
+//	baseCalculo = adversario.slice();
+//	baseCalculo.unshift([jogada])
+//	seqCalculo = montaSequencia(baseCalculo, board)
+//	retorno = funcaoAvaliacao(seqCalculo)
+//	while(seleciona = retorno.pop()){
+//		if((seleciona[0] !== 0) && ((seleciona[0]<mini)||(seleciona[3]<mini))){ mini = retorno; alert("novo mini "+mini) }
+//	}	
+//}
+
+return maxi
+
+
+
+//ATÉ AQUI
+
+
+
+
+}
+
+function calculaMinimax(board, player = 1){
+	let brancas = []
+	let jogada
+	let jogador = []
+	let adversario = []
+	var boardLocal
+	var retorno  = [0,[0,0]]
+	var provisorio
+//separa peças em três vetores
+//alert(++contador)
+	   for (let i = 0; i < size; i++) {
+                    for (let j = 0; j < size; j++) {
+			if(board[i][j] == 0){
+				brancas.push([i,j])
+			} else if (board[i][j] == player){
+				adversario.push([i,j])
+			} else {
+				jogador.push([i,j])
+		   	}
+	     	    }
+	   }
+//alert("entrou com o vetor do tamanho"+brancas.length)
+//	alert("brancas "+JSON.stringify(brancas))
+//	alert("adversario "+JSON.stringify(adversario))
+//	if(jogador.length > 0) { alert("jogador "+JSON.stringify(jogador)) }
+
+	//calculo do MINIMAX
+	while((jogada = brancas.pop()) && (retorno[0] != player)){ //para tirar o alfa beta basta tirar a última condição do and
+//alert("contador"+contador)
+		boardLocal = board.slice()
+//	alert(board)
+//	alert(JSON.stringify([player,[jogada[0],jogada[1]]]))
+	boardLocal[jogada[0]][jogada[1]] = player
+		if( gameOver(boardLocal, player) ){ provisorio = [player,[jogada[0],jogada[1]]] } else { provisorio = calculaMinimax(boardLocal, -1*(player)) }	
+		if(provisorio[0]==player){ retorno = provisorio }
+	boardLocal[jogada[0]][jogada[1]] = 0
+//	alert(boardLocal+"esta dando gameOver"+gameOver(boardLocal,player)+"e retornando "+JSON.stringify(retorno))
+		
+	}
+return retorno
+}
+
+
+function funcaoAvaliacao(seqJogador) {
+	let destino
+	var maxLargura
+	var maxAltura
+	var esquerda
+	var direita
+	var alto
+	var baixo
+	var maisEsquerda
+	var maisDireita
+	var maisAlto
+	var maisBaixo
+	var parMaisLargo
+	var parMaisAlto
+	var instanciaLocal
+
+	while(seqJogador.length > 0){
+//	alert("entrou no max com sequencia"+JSON.stringify(seqJogador)+" com length "+seqJogador.length)
+		alto = 1000
+		baixo = 0
+		esquerda = 1000
+		direita = 0
+		maxLargura = 0
+		maxAltura = 0
+		while (instanciaLocal = seqJogador.pop()) {
+//			alert("instancia Local "+JSON.stringify(instanciaLocal)+" length "+instanciaLocal.length)
+			for(let i = 0; i < instanciaLocal.length; i++){
+//			alert("instanciaLocal "+JSON.stringify(instanciaLocal[i][0])+" - "+JSON.stringify(instanciaLocal[i][1])+"sem JSON "+instanciaLocal[i]+"com JSON "+JSON.stringify(instanciaLocal[i]) )
+					if(instanciaLocal[i][0]<alto){ alto = instanciaLocal[i][0]; maisAlto = instanciaLocal[i] }
+//			alert("elemento "+JSON.stringify(instanciaLocal[i][0])+" alto - "+alto+" baixo - "+baixo)
+					if(instanciaLocal[i][0]>baixo){ baixo = instanciaLocal[i][0]; maisBaixo = instanciaLocal[i] }
+					if(instanciaLocal[i][1]>direita){ direita = instanciaLocal[i][1]; maisDireita = instanciaLocal[i] }
+//			alert("elemento "+JSON.stringify(instanciaLocal[i][0])+" direita - "+direita+" esquerda - "+esquerda)
+					if(instanciaLocal[i][1]<esquerda){ esquerda = instanciaLocal[i][1]; maisEsquerda = instanciaLocal[i] }
+//				alert(" do candidato, alto - "+alto+", baixo = "+baixo+", direita,- "+direita+" esquerda - "+esquerda)
+//				alert("Mais alto  "+maisAlto+" mais baixo "+maisBaixo+", mais direita "+maisDireita+" mais esquerda "+maisEsquerda)	
+				if(direita - esquerda > maxLargura) { maxLargura = direita - esquerda; parMaisLargo = [maisDireita, maisEsquerda] } 
+				if(baixo - alto > maxAltura) { maxAltura = baixo - alto; parMaisAlto = [maisAlto, maisBaixo] } 
+//				alert("Nota largura "+maxLargura+" de largura em "+parMaisLargo+", e altura com "+maxAltura+" em "+parMaisAlto)
+			}
+		}
+	}
+	return [maxLargura, parMaisLargo, maxAltura, parMaisAlto]
+}
+
+function montaSequencia(todasPecas, board){
+	var cabeca = 0	
+	var filhos = []
+	var sequencia = []
+//alert("entra com "+JSON.stringify(todasPecas)+" length "+todasPecas.length)
+		while(todasPecas.length > 0){
+			origem = todasPecas.pop()
+//alert("A posicao comparada sera "+JSON.stringify(origem))
+			candidatos = geraCandidatos(origem[0], origem[1], board.length-1)
+			for(let i = 0; i < todasPecas.length; i++){
+				for(let j = 0; j < candidatos.length; j++) {
+//if((candidatos[j]).length>0) { alert("length "+candidatos[j].length}
+//alert("vai comparar "+JSON.stringify(todasPecas[i])+" com "+JSON.stringify(candidatos[j]))
+					if(JSON.stringify(todasPecas[i])==JSON.stringify(candidatos[j])){
+//alert("entrou no if")
+						if(cabeca == 0 || filhos.length==0){
+							filhos = [origem]
+							cabeca++
+						filhos.push(todasPecas[i])
+//alert("if novos filhos "+JSON.stringify(filhos))
+						} else { filhos.concat(todasPecas[i]); alert("else novos filhos "+JSON.stringify(filhos))}	
+
+					}
+				}
+			}
+			sequencia.push(filhos)
+			filhos = []
+		}
+		return sequencia
+}
+
 
 function especula(board, player = 1){
 	aux = [board.length,board.length]
