@@ -367,5 +367,3 @@ function especula(board, player = 1){
 	} 
 	}
 }
-
-
