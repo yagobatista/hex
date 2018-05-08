@@ -244,7 +244,7 @@ function calculaMinimax(board, player = 1, profundidade = 0){
 
 	//calculo do MINIMAX
 	contadorMinimax = 0
-	while((jogada = brancas.pop()) && (retorno[0] != player) && contador < 3){ //para tirar o alfa beta basta tirar a última condição do and
+	while((jogada = brancas.pop()) && (retorno[0] != player) && contador < 3){ //quem implementa a poda alfa beta é a segunda condição do and
 //alert("contador"+contador)
 contador++
 		boardLocal = board.slice()
