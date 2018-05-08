@@ -384,35 +384,39 @@ function montaSequencia(todasPecas, board) {
 
 
 function especula(board, player = 1) {
-	aux = [board.length, board.length]
-	corte = new Array(aux)
-	var fila = new Array(aux)
-	let linha = board.length
-	let coluna = board.length
-	let condicao = false
-	for (condicao = board.length - 1; condicao > 0; condicao--) {
-		fila = buscaLargura(condicao, board.length - 1, board, player, fila, corte)
-		jogada = false
-		contador = 0
+	aux = [board.length, board.length];
+	corte = new Array(aux);
+	var fila = new Array(aux);
+	let linha = board.length;
+	let coluna = board.length;
+	// let condicao = false;
+	debugger;
+	for (let condicao = board.length - 1; condicao > 0; condicao--) {
+		fila = buscaLargura(condicao, board.length - 1, board, player, fila, corte);
+		jogada = false;
+		contador = 0;
 		do {
-			par = fila.pop()
-			linha = par[0]
+			par = fila.pop();
+			linha = par[0];
 			if (linha == undefined) {
-				linha = fila[0]
+				linha = fila[0];
 			}
 			coluna = par[1]
 			if (coluna == undefined) {
-				coluna = par
+				coluna = par;
 			}
 			contador++
 			if (0 == board[linha][coluna]) {
-				jogada = true
+				jogada = true;
 			}
-			fila = fila.pop()
+			fila = fila.pop();
+
 		} while ((jogada == false) && (contador < (board.length * board.length / 2) && (fila.length >= 0)))
+
 		if (linha >= 0 && coluna >= 0) {
 			condicao = true
 			return [linha, coluna];
 		}
+
 	}
 }

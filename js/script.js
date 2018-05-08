@@ -12,10 +12,10 @@ function playerMove(board, line, column, modo) {
                     randomMove(board);
                 } else if (modo === 1) {
                     //mudar nome
-                    aiUm();
+                    aiMoveLargura(board);
                 } else if (modo === 2) {
                     //mudar nome
-                    aiDois();
+                    aiMinimax(board, -1);
                 }  
             }, 500);
         }

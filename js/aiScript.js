@@ -42,10 +42,10 @@ function aiMinimax(board, player) {
     let line;
     let column;
     let par = [];
-    par = calculaMinimax(board)
+    par = calculaMinimax(board);
     if (par[0] == player) {
-        line = par[1][0]
-        column = par[1][1]
+        line = par[1][0];
+        column = par[1][1];
     } else {
         do {
             line = parseInt(Math.random() * board.length);

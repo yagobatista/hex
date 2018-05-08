@@ -27,10 +27,8 @@ function makeBoard(size, modo) {
         let fimJogo = false;
         let contador = 0;
         while (!fimJogo) {
-            alert("proxima jogada Minimax")
-            //aiMove(board);
+            alert("proxima jogada Minimax");
             aiMinimax(board, -1);
-            debugger;
             //alert("calcula")
             //		calculaPontos(board, -1)
             if (gameOver(board, -1)) {
