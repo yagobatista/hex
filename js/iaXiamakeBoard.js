@@ -9,30 +9,17 @@ function makeBoard(board) {
         boardString += '</div>';
     }
     document.getElementsByClassName('board')[0].innerHTML = boardString;
-	var fimJogo = false
-	let contador = 0
-	while(!fimJogo){
-	alert("proxima jogada CutOff")
-                //aiMove(board);
-		aiCutOff(board, -1)
-		//alert("calcula")
-//		calculaPontos(board, -1)
-	    if(gameOver(board, -1)){
-		fimJogo = true
-		alert("A IA com CutOff ganhou")
-	} else {
-	alert("proxima jogada MiniMax")
-		aiMinimax(board, 1)
-		//                aiMoveLargura(board);
-//		calculaPontos(board)
-	}
-	if(gameOver(board, 1)){
-	fimJogo = true
-	alert("A IA com Minimax")	}
-	contador++
-	}
-}
+    //action of the event of click
+    let hexagonos = document.getElementsByClassName('hex');
+    for (let index = 0; index < hexagonos.length; index++) {
+        hexagonos[index].onclick = () => {
+            const column = index % board.length;
+            const line = (index - column) / board[0].length;
+            playerMove(board, line, column);
+        };
 
+    }
+}
 
 
 function markPosition(board, line, column, player = null) {
