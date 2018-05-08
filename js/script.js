@@ -8,15 +8,13 @@ function playerMove(board, line, column, modo) {
             alert('Você ganhou!');
         } else {
             setTimeout(() => {
-                if(modo === 0) {
+                if (modo === 0) {
                     randomMove(board);
                 } else if (modo === 1) {
-                    //mudar nome
                     aiMoveLargura(board);
                 } else if (modo === 2) {
-                    //mudar nome
                     aiMinimax(board, -1);
-                }  
+                }
             }, 500);
         }
     }
@@ -31,4 +29,26 @@ function gameOver(board, player = 1) {
         }
     }
     return false;
+}
+
+function modoIaVsIa() {
+    let fimJogo = false;
+    let contador = 0;
+    while (!fimJogo) {
+        alert("proxima jogada Minimax");
+        aiMinimax(board, -1);
+        if (gameOver(board, -1)) {
+            fimJogo = true
+            alert("A IA com MiniMax ganhou")
+        } else {
+            alert("proxima jogada BuscaLargura")
+            aiMoveLargura(board);
+        }
+        if (gameOver(board, 1)) {
+            fimJogo = true
+            alert("A IA com busca na largura ganhou")
+        }
+        contador++
+        alert("proxima rodada")
+    }
 }
