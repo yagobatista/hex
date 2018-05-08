@@ -12,25 +12,24 @@ function makeBoard(board) {
 	var fimJogo = false
 	let contador = 0
 	while(!fimJogo){
-	alert("proxima jogada Minimax")
+	alert("proxima jogada CutOff")
                 //aiMove(board);
 		aiCutOff(board, -1)
 		//alert("calcula")
 //		calculaPontos(board, -1)
 	    if(gameOver(board, -1)){
 		fimJogo = true
-		alert("A IA com MiniMax ganhou")
+		alert("A IA com CutOff ganhou")
 	} else {
-	alert("proxima jogada BuscaLargura")
+	alert("proxima jogada MiniMax")
 		aiMinimax(board, 1)
 		//                aiMoveLargura(board);
 //		calculaPontos(board)
 	}
 	if(gameOver(board, 1)){
 	fimJogo = true
-	alert("A IA com busca na largura ganhou")	}
+	alert("A IA com Minimax")	}
 	contador++
-	alert("proxima rodada")
 	}
 }
 
