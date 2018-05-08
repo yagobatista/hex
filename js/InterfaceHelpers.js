@@ -23,7 +23,7 @@ function makeBoard(size, modo) {
             };
         }
     } else if (modo === 3) {
-        modoIaVsIa();
+        modoIaVsIa(board);
     }
 }
 

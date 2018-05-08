@@ -31,7 +31,7 @@ function gameOver(board, player = 1) {
     return false;
 }
 
-function modoIaVsIa() {
+function modoIaVsIa(board) {
     var fimJogo = false
     let contador = 0
     while (!fimJogo) {
