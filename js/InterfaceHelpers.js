@@ -23,6 +23,31 @@ function makeBoard(size, modo) {
             };
 
         }
+    } else if (modo === 3) {
+        let fimJogo = false;
+        let contador = 0;
+        while (!fimJogo) {
+            alert("proxima jogada Minimax")
+            //aiMove(board);
+            aiMinimax(board, -1);
+            debugger;
+            //alert("calcula")
+            //		calculaPontos(board, -1)
+            if (gameOver(board, -1)) {
+                fimJogo = true
+                alert("A IA com MiniMax ganhou")
+            } else {
+                alert("proxima jogada BuscaLargura")
+                aiMoveLargura(board);
+                //		calculaPontos(board)
+            }
+            if (gameOver(board, 1)) {
+                fimJogo = true
+                alert("A IA com busca na largura ganhou")
+            }
+            contador++
+            alert("proxima rodada")
+        }
     }
 }
 
