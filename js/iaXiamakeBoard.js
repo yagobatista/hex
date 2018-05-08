@@ -14,7 +14,7 @@ function makeBoard(board) {
 	while(!fimJogo){
 	alert("proxima jogada Minimax")
                 //aiMove(board);
-		aiMinimax(board, -1)
+		aiCutOff(board, -1)
 		//alert("calcula")
 //		calculaPontos(board, -1)
 	    if(gameOver(board, -1)){
@@ -22,7 +22,8 @@ function makeBoard(board) {
 		alert("A IA com MiniMax ganhou")
 	} else {
 	alert("proxima jogada BuscaLargura")
-                aiMoveLargura(board);
+		aiMinimax(board, 1)
+		//                aiMoveLargura(board);
 //		calculaPontos(board)
 	}
 	if(gameOver(board, 1)){
