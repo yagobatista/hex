@@ -42,7 +42,7 @@ function aiMinimax(board, player) {
     let line;
     let column;
     let par = [];
-    par = calculaMinimax(board);
+    par = calculaMinimax(board, -1);
     if (par[0] == player) {
         line = par[1][0];
         column = par[1][1];

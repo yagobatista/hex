@@ -137,21 +137,21 @@ function especulaProfundidade(linha, coluna, board, player, corte) {
 
 function buscaLargura(linha, coluna, board, player, fila, corte) {
 	if (fila.length > 0) {
-		fila.pop()
+		fila.pop();
 	}
 	var resultado = new Array()
 	if ((coluna == 0) || (linha == 0)) {
-		resultado = [linha, coluna]
-		return resultado
+		resultado = [linha, coluna];
+		return resultado;
 	} else {
-		corte.push([linha, coluna])
-		candidatos = geraCandidatos(linha, coluna, board.length - 1)
-		escolhidos = eliminaRedundancia(linha, coluna, candidatos, corte)
-		filhos = checaFilho(escolhidos, player, board, corte, true)
-		fila.push(filhos)
-		resultado.push(buscaLargura(fila[0][0][0], fila[0][0][1], board, player, fila, corte))
-		resultado.push([linha, coluna])
-		return resultado
+		corte.push([linha, coluna]);
+		candidatos = geraCandidatos(linha, coluna, board.length - 1);
+		escolhidos = eliminaRedundancia(linha, coluna, candidatos, corte);
+		filhos = checaFilho(escolhidos, player, board, corte, true);
+		fila.push(filhos);
+		resultado.push(buscaLargura(fila[0][0][0], fila[0][0][1], board, player, fila, corte));
+		resultado.push([linha, coluna]);
+		return resultado;
 	}
 
 }
