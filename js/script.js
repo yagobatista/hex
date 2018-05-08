@@ -28,10 +28,14 @@ function aiMinimax(board, player) {
     let line;
     let column;
     let par = []
-	par = calculaMinimax(board)
+//	par = calculaMinimax(board)
+	par = calculaAvaliacaoComCutOff(board)
+//	alert("par "+JSON.stringify(par))
 	if(par[0]==player){
 	line = par[1][0]
 	column = par[1][1]
+//	alert("linha "+line)
+//	alert("column "+column)
 	} else {
 	   do {
 		line = parseInt(Math.random() * board.length);

@@ -112,7 +112,7 @@ if(fila.length > 0 ) { fila.pop() }
 
 }
 
-function calculaPontos(board, player = 1){
+function calculaAvaliacaoComCutOff(board, player = 1){
 	let brancas = []
 	let brancas2 = []
 	let jogada
@@ -123,7 +123,7 @@ function calculaPontos(board, player = 1){
 	let seqAdversario = []
 	let seqCalculo = []
 	let baseCalculo = []
-	let retorno = []	
+	let retorno = [0,[0,0],0]	
 	var mini = 1000
 	var maxi = [0]
 //separa peças em três vetores
@@ -139,43 +139,69 @@ function calculaPontos(board, player = 1){
 		   	}
 	     	    }
 	   }
-
 //alert("brancas "+JSON.stringify(brancas))
 //alert("adversario "+JSON.stringify(adversario))
 //if(jogador.length > 0) { alert("jogador "+JSON.stringify(jogador)) }
 
 //chama os métodos que criam as sequências de cada jogador
-seqJogador = montaSequencia(jogador,board)
+//seqJogador = montaSequencia(jogador,board)
 //alert("sequencia jogador"+ JSON.stringify(seqJogador)+" length "+seqJogador.length)
 //seqAdversario = montaSequencia(adversario,board)
 //alert("sequencia adversário"+ JSON.stringify(seqAdversario)+" length "+seqAdversario.length)
 
 //calculo do MAX
 while(jogada = brancas2.pop()){
+//	a = [[0,2],[0,3],[0,4]]
+//while(jogada = a.pop()){	
 	baseCalculo = jogador.slice();
+//	alert("jogada "+JSON.stringify(jogada))
+//if('[5,4]' == JSON.stringify(jogada)){ alert("base "+JSON.stringify(baseCalculo)+"jogada sendo analisada "+JSON.stringify(jogada)) }
+	baseCalculo.unshift(jogada)
+//	alert("base "+JSON.stringify(baseCalculo))
+//if('[5,4]' == JSON.stringify(jogada)){alert("base mais jogada "+JSON.stringify(baseCalculo)+"jogada sendo analisada "+JSON.stringify(jogada))}
+	seqCalculo = montaSequencia(baseCalculo, board)
+//	alert("sequencia avaliada "+JSON.stringify(seqCalculo))
+//if('[5,4]' == JSON.stringify(jogada)){alert("sequencia montada "+JSON.stringify(seqCalculo))}
+	retorno = funcaoAvaliacao(seqCalculo)
+//alert("retornofuncao para ---"+JSON.stringify(retorno)+" com retorno 0 = "+retorno[0]+" e maxi 0 = "+JSON.stringify(maxi))
+	//if('[0,2]' == JSON.stringify(jogada)){alert("retornofuncao para 0,2"+JSON.stringify(retorno))}
+if(retorno[0]>maxi[0]){
+//	alert("trocou maxi")
+	maxi[0] = retorno[0]
+	maxi[1] = jogada
+//	alert(JSON.stringify(maxi))
+}
+if(retorno[2]>maxi[0]){
+	maxi[0] = retorno[2]
+	maxi[1] = jogada
+}
+
+}
+
+// calculo da avaliacao do adversario
+//calculo do MAX
+
+	a = []
+while(jogada = a.pop()){	
+//while(jogada = brancas.pop()){
+	baseCalculo = adversario.slice();
 //if('[5,4]' == JSON.stringify(jogada)){ alert("base "+JSON.stringify(baseCalculo)+"jogada sendo analisada "+JSON.stringify(jogada)) }
 	baseCalculo.unshift(jogada)
 //if('[5,4]' == JSON.stringify(jogada)){alert("base mais jogada "+JSON.stringify(baseCalculo)+"jogada sendo analisada "+JSON.stringify(jogada))}
 	seqCalculo = montaSequencia(baseCalculo, board)
 //if('[5,4]' == JSON.stringify(jogada)){alert("sequencia montada "+JSON.stringify(seqCalculo))}
 	retorno = funcaoAvaliacao(seqCalculo)
+//	alert("retorno = "+JSON.stringify(retorno))
 //if('[5,4]' == JSON.stringify(jogada)){alert("retornofuncao"+JSON.stringify(retorno))}
 	while(seleciona = retorno.pop()){
-		if(seleciona[0]>maxi[0]) { maxi = seleciona}
+	alert("seleciona "+JSON.stringify(seleciona))
+	if(seleciona[0]>maxi[0]) { maxi = [seleciona]}
+		alert("maxi "+JSON.stringify(maxi))
 	}	
 }
-
-// calculo do MIN
-//while(jogada = brancas.pop()){
-//	baseCalculo = adversario.slice();
-//	baseCalculo.unshift([jogada])
-//	seqCalculo = montaSequencia(baseCalculo, board)
-//	retorno = funcaoAvaliacao(seqCalculo)
-//	while(seleciona = retorno.pop()){
-//		if((seleciona[0] !== 0) && ((seleciona[0]<mini)||(seleciona[3]<mini))){ mini = retorno; alert("novo mini "+mini) }
-//	}	
-//}
-
+//alert("maxi "+JSON.stringify(maxi))
+if(maxi[0] > 0) { maxi[0] = -1; } else { maxi[0] = 0 }
+//alert("maxi incrementado "+JSON.stringify(maxi))
 return maxi
 
 
@@ -235,6 +261,7 @@ return retorno
 
 
 function funcaoAvaliacao(seqJogador) {
+//alert("Dentro da funcaoAvaliacao"+JSON.stringify(seqJogador))
 	let destino
 	var maxLargura
 	var maxAltura
@@ -276,6 +303,7 @@ function funcaoAvaliacao(seqJogador) {
 			}
 		}
 	}
+//	alert(JSON.stringify([maxLargura, parMaisLargo, maxAltura, parMaisAlto]))
 	return [maxLargura, parMaisLargo, maxAltura, parMaisAlto]
 }
 
@@ -297,9 +325,9 @@ function montaSequencia(todasPecas, board){
 						if(cabeca == 0 || filhos.length==0){
 							filhos = [origem]
 							cabeca++
-						filhos.push(todasPecas[i])
+						filhos.push(todasPecas[i]); // alert("if novos filhos "+JSON.stringify(filhos));	
 //alert("if novos filhos "+JSON.stringify(filhos))
-						} else { filhos.concat(todasPecas[i]); alert("else novos filhos "+JSON.stringify(filhos))}	
+						} else { filhos.push(todasPecas[i]); }// alert("else novos filhos "+JSON.stringify(filhos))}	
 
 					}
 				}
@@ -307,6 +335,7 @@ function montaSequencia(todasPecas, board){
 			sequencia.push(filhos)
 			filhos = []
 		}
+//		alert("sequencia sai com "+JSON.stringify(sequencia))
 		return sequencia
 }
 
