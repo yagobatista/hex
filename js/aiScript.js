@@ -7,9 +7,6 @@ function randomMove(board) {
         column = parseInt(Math.random() * board.length);
     } while (board[line][column] !== 0);
     markPosition(board, line, column, 'ai');
-    if (gameOver(board, -1)) {
-        alert('A ia ganhoaiMinimaxu!');
-    }
 }
 
 function aiMinimax(board, player) {
@@ -18,7 +15,6 @@ function aiMinimax(board, player) {
     let column;
     let par = []
     par = calculaMinimax(board);
-    debugger
     if (par[0] == player) {
         line = par[1][0]
         column = par[1][1]
@@ -28,7 +24,7 @@ function aiMinimax(board, player) {
             column = parseInt(Math.random() * board.length);
         } while (board[line][column] !== 0);
     }
-    markPosition(board, line, column);
+    markPosition(board, line, column, player === -1 ? 'ai' : '');
 }
 
 function aiCutOff(board, player) {
@@ -46,7 +42,7 @@ function aiCutOff(board, player) {
             column = parseInt(Math.random() * board.length);
         } while (board[line][column] !== 0);
     }
-    markPosition(board, line, column, 'ai');
+    markPosition(board, line, column, player === -1 ? 'ai' : '');
 }
 
 function aiMoveLargura(board) {
@@ -57,5 +53,5 @@ function aiMoveLargura(board) {
     par = especula(board)
     line = par[0]
     column = par[1]
-    markPosition(board, line, column);
+    markPosition(board, line, column, player === -1 ? 'ai' : '');
 }

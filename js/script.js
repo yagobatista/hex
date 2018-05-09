@@ -10,11 +10,19 @@ function playerMove(board, line, column, modo) {
             setTimeout(() => {
                 if (modo === 0) {
                     randomMove(board);
+                    resp = 'O modo aleatório ganhou!';
                 } else if (modo === 1) {
-                    aiMoveLargura(board);
+                    aiCutOff(board, -1);
+                    resp = 'A IA com CutOff ganhou!';
                 } else if (modo === 2) {
                     aiMinimax(board, -1);
+                    resp = 'A IA com minimax ganhou!';
                 }
+
+                if (gameOver(board, -1)) {
+                    alert(resp);
+                }
+                
             }, 500);
         }
     }
@@ -36,18 +44,13 @@ function modoIaVsIa(board) {
     let contador = 0
     while (!fimJogo) {
         alert("proxima jogada CutOff")
-        //aiMove(board);
         aiCutOff(board, -1)
-        //alert("calcula")
-        //		calculaPontos(board, -1)
         if (gameOver(board, -1)) {
             fimJogo = true
-            alert("A IA com CutOff ganhou")
+            alert("A IA com CutOff ganhou!")
         } else {
             alert("proxima jogada MiniMax")
             aiMinimax(board, 1)
-            //                aiMoveLargura(board);
-            //		calculaPontos(board)
         }
         if (gameOver(board, 1)) {
             fimJogo = true
