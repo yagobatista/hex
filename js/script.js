@@ -1,19 +1,18 @@
 function playerMove(board, line, column) {
     if (board[line][column] === 0) {
         markPosition(board, line, column);
-        if (gameOver(board)) {
+        if (gameOver(board, 1)) {
             alert('Você ganhou!');
         } else {
             setTimeout(() => {
-                aiMove(board);
+				aiCutOff(board, 1)
+//                aiMove(board);
             }, 500);
         }
     }
 }
-
 function aiMove(board) {
     // random ai move
-    par = new Array()
     let line;
     let column;
    do {
@@ -21,7 +20,59 @@ function aiMove(board) {
         column = parseInt(Math.random() * board.length);
     } while (board[line][column] !== 0);
 //marca posicao e vê se ganhou
+    markPosition(board, line, column, 'ia');
+	 if (gameOver(board, 1)) {
+        alert('A ia ganhou!')
+    }
+}
+
+function aiMinimax(board, player) {
+    // Minimax ai move
+    let line;
+    let column;
+    let par = []
+	par = calculaMinimax(board, player)
+//	par = calculaAvaliacaoComCutOff(board)
+//	alert("par "+JSON.stringify(par))
+	if(par[0]==player){
+	line = par[1][0]
+	column = par[1][1]
+//	alert("linha "+line)
+//	alert("column "+column)
+	} else {
+	   do {
+		line = parseInt(Math.random() * board.length);
+		column = parseInt(Math.random() * board.length);
+	    } while (board[line][column] !== 0);
+	}
+//marca posicao e vê se ganhou
+    markPosition(board, line, column);
+}
+
+function aiCutOff(board, player) {
+    // Minimax ai move
+    let line;
+    let column;
+    let par = []
+//	par = calculaMinimax(board)
+	par = calculaAvaliacaoComCutOff(board)
+//	alert("par "+JSON.stringify(par))
+	if(par[0]==player){
+	line = par[1][0]
+	column = par[1][1]
+//	alert("linha "+line)
+//	alert("column "+column)
+	} else {
+	   do {
+		line = parseInt(Math.random() * board.length);
+		column = parseInt(Math.random() * board.length);
+	    } while (board[line][column] !== 0);
+	}
+//marca posicao e vê se ganhou
     markPosition(board, line, column, 'ai');
+	 if (gameOver(board, -1)) {
+        alert('A ia ganhou!')
+    }
 }
 
 function aiMoveLargura(board) {
