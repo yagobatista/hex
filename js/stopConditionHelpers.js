@@ -20,7 +20,6 @@ function geraCandidatos(linha, coluna, dimensao) {
 	if (coluna < dimensao) {
 		candidatos.unshift([linha, coluna + 1])
 	}
-	//alert("todos os candidatos sai da seguinte maneira "+JSON.stringify(candidatos))
 	return candidatos
 }
 

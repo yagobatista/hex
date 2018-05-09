@@ -148,7 +148,6 @@ function calculaMinimax(board, player = 1, profundidade = 0) {
 
 
 function funcaoAvaliacao(seqJogador) {
-	//alert("Dentro da funcaoAvaliacao"+JSON.stringify(seqJogador))
 	let destino
 	var maxLargura
 	var maxAltura
@@ -165,7 +164,6 @@ function funcaoAvaliacao(seqJogador) {
 	var instanciaLocal
 
 	while (seqJogador.length > 0) {
-		//	alert("entrou no max com sequencia"+JSON.stringify(seqJogador)+" com length "+seqJogador.length)
 		alto = 1000
 		baixo = 0
 		esquerda = 1000
@@ -173,14 +171,11 @@ function funcaoAvaliacao(seqJogador) {
 		maxLargura = 0
 		maxAltura = 0
 		while (instanciaLocal = seqJogador.pop()) {
-			//			alert("instancia Local "+JSON.stringify(instanciaLocal)+" length "+instanciaLocal.length)
 			for (let i = 0; i < instanciaLocal.length; i++) {
-				//			alert("instanciaLocal "+JSON.stringify(instanciaLocal[i][0])+" - "+JSON.stringify(instanciaLocal[i][1])+"sem JSON "+instanciaLocal[i]+"com JSON "+JSON.stringify(instanciaLocal[i]) )
 				if (instanciaLocal[i][0] < alto) {
 					alto = instanciaLocal[i][0];
 					maisAlto = instanciaLocal[i]
 				}
-				//			alert("elemento "+JSON.stringify(instanciaLocal[i][0])+" alto - "+alto+" baixo - "+baixo)
 				if (instanciaLocal[i][0] > baixo) {
 					baixo = instanciaLocal[i][0];
 					maisBaixo = instanciaLocal[i]
@@ -189,13 +184,10 @@ function funcaoAvaliacao(seqJogador) {
 					direita = instanciaLocal[i][1];
 					maisDireita = instanciaLocal[i]
 				}
-				//			alert("elemento "+JSON.stringify(instanciaLocal[i][0])+" direita - "+direita+" esquerda - "+esquerda)
 				if (instanciaLocal[i][1] < esquerda) {
 					esquerda = instanciaLocal[i][1];
 					maisEsquerda = instanciaLocal[i]
 				}
-				//				alert(" do candidato, alto - "+alto+", baixo = "+baixo+", direita,- "+direita+" esquerda - "+esquerda)
-				//				alert("Mais alto  "+maisAlto+" mais baixo "+maisBaixo+", mais direita "+maisDireita+" mais esquerda "+maisEsquerda)	
 				if (direita - esquerda > maxLargura) {
 					maxLargura = direita - esquerda;
 					parMaisLargo = [maisDireita, maisEsquerda]
@@ -204,11 +196,9 @@ function funcaoAvaliacao(seqJogador) {
 					maxAltura = baixo - alto;
 					parMaisAlto = [maisAlto, maisBaixo]
 				}
-				//				alert("Nota largura "+maxLargura+" de largura em "+parMaisLargo+", e altura com "+maxAltura+" em "+parMaisAlto)
 			}
 		}
 	}
-	//	alert(JSON.stringify([maxLargura, parMaisLargo, maxAltura, parMaisAlto]))
 	return [maxLargura, parMaisLargo, maxAltura, parMaisAlto]
 }
 
@@ -216,25 +206,19 @@ function montaSequencia(todasPecas, board) {
 	var cabeca = 0
 	var filhos = []
 	var sequencia = []
-	//alert("entra com "+JSON.stringify(todasPecas)+" length "+todasPecas.length)
 	while (todasPecas.length > 0) {
 		origem = todasPecas.pop()
-		//alert("A posicao comparada sera "+JSON.stringify(origem))
 		candidatos = geraCandidatos(origem[0], origem[1], board.length - 1)
 		for (let i = 0; i < todasPecas.length; i++) {
 			for (let j = 0; j < candidatos.length; j++) {
-				//if((candidatos[j]).length>0) { alert("length "+candidatos[j].length}
-				//alert("vai comparar "+JSON.stringify(todasPecas[i])+" com "+JSON.stringify(candidatos[j]))
 				if (JSON.stringify(todasPecas[i]) == JSON.stringify(candidatos[j])) {
-					//alert("entrou no if")
 					if (cabeca == 0 || filhos.length == 0) {
 						filhos = [origem]
 						cabeca++
-						filhos.push(todasPecas[i]); // alert("if novos filhos "+JSON.stringify(filhos));	
-						//alert("if novos filhos "+JSON.stringify(filhos))
+						filhos.push(todasPecas[i]); 
 					} else {
 						filhos.push(todasPecas[i]);
-					} // alert("else novos filhos "+JSON.stringify(filhos))}	
+					}	
 
 				}
 			}
@@ -242,7 +226,6 @@ function montaSequencia(todasPecas, board) {
 		sequencia.push(filhos)
 		filhos = []
 	}
-	//		alert("sequencia sai com "+JSON.stringify(sequencia))
 	return sequencia
 }
 
