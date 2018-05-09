@@ -5,13 +5,9 @@ function playerMove(board, line, column) {
             alert('Você ganhou!');
         } else {
             setTimeout(() => {
-				aiCutOff(board, -1)
+				aiCutOff(board, 1)
 //                aiMove(board);
-//					aiMinimax(board, 1);
             }, 500);
-        }
-		if (gameOver(board, -1)) {
-            alert('A IA ganhou!');
         }
     }
 }
