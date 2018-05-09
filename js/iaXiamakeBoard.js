@@ -9,6 +9,7 @@ function makeBoard(board) {
         boardString += '</div>';
     }
     document.getElementsByClassName('board')[0].innerHTML = boardString;
+
 	var fimJogo = false
 	let contador = 0
 	while(!fimJogo){
@@ -34,7 +35,6 @@ function makeBoard(board) {
 }
 
 
-
 function markPosition(board, line, column, player = null) {
     player = player && `${ player }-` || '';
     //alert(player)
@@ -43,3 +43,4 @@ function markPosition(board, line, column, player = null) {
     board[line][column] = positionValue;
     hexagonos[(line * board.length) + column].className = `hex ${ player }selected`;
 }
+

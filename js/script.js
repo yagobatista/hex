@@ -21,7 +21,10 @@ function aiMove(board) {
         column = parseInt(Math.random() * board.length);
     } while (board[line][column] !== 0);
 //marca posicao e vê se ganhou
-    markPosition(board, line, column, 'ai');
+    markPosition(board, line, column, 'ia');
+	 if (gameOver(board, 1)) {
+        alert('A ia ganhou!')
+    }
 }
 
 function aiMinimax(board, player) {
@@ -68,6 +71,9 @@ function aiCutOff(board, player) {
 	}
 //marca posicao e vê se ganhou
     markPosition(board, line, column, 'ai');
+	 if (gameOver(board, -1)) {
+        alert('A ia ganhou!')
+    }
 }
 
 function aiMoveLargura(board) {
