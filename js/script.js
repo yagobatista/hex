@@ -2,9 +2,7 @@ function playerMove(board, line, column, modo) {
     if (board[line][column] === 0) {
         markPosition(board, line, column);
         if (gameOver(board)) {
-            document.getElementsByName('reiniciar')[0].className = 'show';
-            document.getElementsByName('parar')[0].className = 'hide';
-            document.getElementsByName('comecar')[0].className = 'hide';
+            resetButtons();
             alert('Você ganhou!');
         } else {
             setTimeout(() => {
@@ -20,9 +18,10 @@ function playerMove(board, line, column, modo) {
                 }
 
                 if (gameOver(board, -1)) {
+                    resetButtons();
                     alert(resp);
                 }
-                
+
             }, 500);
         }
     }
@@ -47,6 +46,7 @@ function modoIaVsIa(board) {
         aiCutOff(board, -1)
         if (gameOver(board, -1)) {
             fimJogo = true
+            resetButtons()
             alert("A IA com CutOff ganhou!")
         } else {
             alert("proxima jogada MiniMax")
@@ -54,6 +54,7 @@ function modoIaVsIa(board) {
         }
         if (gameOver(board, 1)) {
             fimJogo = true
+            resetButtons()
             alert("A IA com Minimax")
         }
         contador++

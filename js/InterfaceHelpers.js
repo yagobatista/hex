@@ -35,3 +35,9 @@ function markPosition(board, line, column, player = null) {
     board[line][column] = positionValue;
     hexagonos[(line * board.length) + column].className = `hex ${ player }selected`;
 }
+
+function resetButtons() {
+    document.getElementsByName('reiniciar')[0].className = 'show';
+    document.getElementsByName('parar')[0].className = 'hide';
+    document.getElementsByName('comecar')[0].className = 'hide';
+}
