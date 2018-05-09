@@ -1,5 +1,3 @@
-
-
 function geraCandidatos(linha, coluna, dimensao){
 //alert("entrou candidatos linha"+linha+"coluna "+coluna+"dimensao "+dimensao)
 	//forma os candidatos
@@ -368,5 +366,4 @@ function especula(board, player = 1){
 	} 
 	}
 }
-
 
